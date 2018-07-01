@@ -1,0 +1,46 @@
+#root {
+    -fx-border-width:2;-fx-border-color:#3949AB;
+}
+
+#top {
+    -fx-background-color: #3949AB;
+    /* -fx-background-color: #FFFFFF; */
+}
+
+#minHide{
+	-fx-background-image:url("/com/cvte/resources/min.png");
+    -fx-background-repeat:no-repeat;
+}
+#minHide{
+    -fx-cursor:hand;
+}
+
+#minHide:hover{
+	-fx-background-image:url("/com/cvte/resources/minHide.png");
+}
+
+#winClose {
+    -fx-cursor:hand;
+}
+
+#winClose{
+    -fx-background-image:url("/com/cvte/resources/winClose_0.png");
+    -fx-background-repeat:no-repeat;
+}
+
+#winClose:hover {
+    -fx-background-image:url("/com/cvte/resources/winClose_1.png");
+}
+
+#winClose:pressed {
+    -fx-background-image:url("/com/cvte/resources/winClose_2.png");
+}
+.button-raised{
+	-fx-padding: 0.7em 0.57em;
+    -fx-font-size: 16px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: rgb(77,102,204);
+    -fx-pref-width: 260;
+    -fx-pref-height:42;
+    -fx-text-fill: WHITE;
+}
