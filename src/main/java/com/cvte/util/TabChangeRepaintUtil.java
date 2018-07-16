@@ -44,6 +44,12 @@ public class TabChangeRepaintUtil {
 			Constant.maskradio.setDisable(false);
 			Constant.avgradio.setDisable(false);
 			Constant.slider.setDisable(false);
+			// slide 显示隐藏
+			if (Constant.maskradio.isSelected()) {
+				Constant.slider.setDisable(false);
+			}else {
+				Constant.slider.setDisable(true);
+			}
 			Constant.slider.setValue(Constant.SlideValue);
 						
 			tabChangeRefreshCover();
@@ -106,6 +112,12 @@ public class TabChangeRepaintUtil {
 			Constant.maskradio.setDisable(false);
 			Constant.avgradio.setDisable(false);
 			Constant.slider.setDisable(false);
+			// slide 显示隐藏
+			if (Constant.maskradio.isSelected()) {
+				Constant.slider.setDisable(false);
+			}else {
+				Constant.slider.setDisable(true);
+			}
 			Constant.slider.setValue(Constant.beiSlideValue);			
 			
 			tabChangeRefreshCover();

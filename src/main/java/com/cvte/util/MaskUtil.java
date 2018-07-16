@@ -180,8 +180,8 @@ public class MaskUtil {
 		else if("shibei".equals(name)) {
 			Mask mask = Constant.AnalysisMix.getMask();
 			int[][] beiMask = mask.getCurBeiMask();
-			System.out.println("mask = " + mask.getAllSoleBeiMask().size() + " " + name);
-			System.out.println(" == " + Constant.beiAvg.getCenterY());
+//			System.out.println("mask = " + mask.getAllSoleBeiMask().size() + " " + name);
+//			System.out.println(" == " + Constant.beiAvg.getCenterY());
 //			for(int i = 0; i < 1060; i++) {
 //				for(int j = 0; j < 1060; j++) {
 //					System.out.println(beiMask[i][j]);

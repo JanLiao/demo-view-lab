@@ -37,7 +37,7 @@ public class CircleTask extends Task<Void> {
         CircleData pan = LabelUtil.getAvgCircleData("shipan");
         System.out.println("获取平均值视盘时间 = " + (System.currentTimeMillis() - start));
         //初始化视盘avg
-        Constant.panAvg = pan;
+        Constant.panAvg = pan;		
         gc.drawImage(innerImg, pan.getCenterX()*4 - 265,
         		pan.getCenterY()*4 - 265,
         		530, 530, 0, 0, 530, 530);

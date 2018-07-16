@@ -24,6 +24,13 @@ public class RadioChangeRepaintUtil {
 
 	//该方法为界面初始化调用
 	public static void avgRepaint() {
+		// slide 显示隐藏
+		if(Constant.maskradio.isSelected()) {
+			Constant.slider.setDisable(false);
+		}else {
+			Constant.slider.setDisable(true);
+		}
+		
 		//清除tab canvas
 		int len = Constant.TabCanvas.size();
 		for(int i = 0; i < len; i++) {
@@ -361,6 +368,13 @@ public class RadioChangeRepaintUtil {
 	}
 
 	public static void overLapRepaint() {
+		// slide 显示隐藏
+		if (Constant.maskradio.isSelected()) {
+			Constant.slider.setDisable(false);
+		}else {
+			Constant.slider.setDisable(true);
+		}
+		
 		// 清除tab canvas
 		int len = Constant.TabCanvas.size();
 		for (int i = 0; i < len - 1; i++) {
@@ -715,6 +729,19 @@ public class RadioChangeRepaintUtil {
 	}
 
 	public static void maskRepaint() {
+		// slide 显示隐藏
+		if (Constant.maskradio.isSelected()) {
+			Constant.slider.setDisable(false);
+		}else {
+			Constant.slider.setDisable(true);
+		}
+		
+		if(Constant.beiAvg == null) {
+			// 设置bei avg
+			CircleData bei = LabelUtil.getAvgCircleData("shibei");
+			Constant.beiAvg = bei;
+		}
+		
 		Mask mask = Constant.AnalysisMix.getMask();
 		int[][] curPanMask = MaskUtil.getCurMask("pan", mask);
 		int[][] curBeiMask = MaskUtil.getCurMask("bei", mask);

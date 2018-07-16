@@ -281,6 +281,7 @@ public class MarkMix {
         Constant.fenzi = vbLabel1;
         vb.getChildren().add(vbLabel1);
         JFXSlider horRightSlider = new JFXSlider();
+        horRightSlider.setDisable(true);
         Constant.slider = horRightSlider;
         vb.getChildren().add(horRightSlider);
         //horRightSlider.setMinWidth(500);

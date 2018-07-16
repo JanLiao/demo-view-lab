@@ -259,6 +259,7 @@ public class MarkUpdate {
 //        radioBox.getChildren().add(per);
         
         JFXSlider horRightSlider = new JFXSlider();
+        horRightSlider.setDisable(true);
         Constant.slider = horRightSlider;
         //horRightSlider.setMinWidth(500);
         //horRightSlider.setIndicatorPosition(IndicatorPosition.RIGHT);

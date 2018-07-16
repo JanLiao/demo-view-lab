@@ -69,7 +69,7 @@ public class CheckBoxChangeUtil {
 		}
 		else if(Constant.CurrTab == 3) {
 			System.out.println("Curr Tab3  " + user);
-			Constant.AnalysisMix.setAllLabelUser(user);
+			//Constant.AnalysisMix.setAllLabelUser(user);
 		}
 		
 		if(Constant.radio.isSelected()) {  //判断重叠radio是否被选中
@@ -110,7 +110,28 @@ public class CheckBoxChangeUtil {
 			}
 		}
 		//System.out.println(9999);
+		
+		// 临时改变pan bei center user
+		//changeUser();
 	}
 	
-	
+	public static void changeUser() {
+		int len = Constant.CheckBoxList.size();
+		String user = "";
+		for (int i = 0; i < len; i++) {
+			if(Constant.CheckBoxList.get(i).isSelected()) {
+				user = user + Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0] + ",";
+			}
+		}
+		
+		if(Constant.CurrTab == 0) {
+			Constant.AnalysisMix.setPanUser(user);
+			Constant.AnalysisMix.getMask().setPanUser(user);
+		} else if(Constant.CurrTab == 1) {
+			Constant.AnalysisMix.setBeiUser(user);
+			Constant.AnalysisMix.getMask().setBeiUser(user);
+		} else if(Constant.CurrTab == 2) {
+			Constant.AnalysisMix.setCenterUser(user);
+		}
+	}
 }

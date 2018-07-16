@@ -10,22 +10,16 @@ import com.cvte.entity.Mask;
 public class SlideChangeUtil {
 
 	public static void repaint(double percent) {
+		if(Constant.CurrTab == 0) {
+			Constant.SlideValue = percent;
+		}
+		else if(Constant.CurrTab == 1) {
+			Constant.beiSlideValue = percent;
+		}
 		if(Constant.radio.isSelected()) {  //判断重叠radio是否被选中
-			if(Constant.CurrTab == 0) {
-				Constant.SlideValue = percent;
-			}
-			else if(Constant.CurrTab == 1) {
-				Constant.beiSlideValue = percent;
-			}
 			System.out.println("nothing");
 		}
 		else {
-			if(Constant.CurrTab == 0) {
-				Constant.SlideValue = percent;
-			}
-			else if(Constant.CurrTab == 1) {
-				Constant.beiSlideValue = percent;
-			}
 			if(Constant.maskradio.isSelected()) {
 				readyPaint(percent);
 			}
@@ -41,14 +35,20 @@ public class SlideChangeUtil {
 			Constant.SlideValue = percent;
 			System.out.println("pan slide percent = " + percent);
 			int len = 0;
-			String user = "";
-			for(int i = 0; i < Constant.CheckBoxList.size(); i++) {
-				if(Constant.CheckBoxList.get(i).isSelected()) {
-					len++;
-					user = user + Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0] + ",";
-				}
+//			String user = "";
+//			for(int i = 0; i < Constant.CheckBoxList.size(); i++) {
+//				if(Constant.CheckBoxList.get(i).isSelected()) {
+//					len++;
+//					user = user + Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0] + ",";
+//				}
+//			}
+//			Constant.AnalysisMix.setPanUser(user);
+			if(Constant.AnalysisMix.getPanUser() == null || 
+					"".equals(Constant.AnalysisMix.getPanUser())) {
+				System.out.println("pan 长度为0");
+			}else {
+				len = Constant.AnalysisMix.getPanUser().split(",").length;
 			}
-			Constant.AnalysisMix.setPanUser(user);
 			Constant.fenmu.setText("" + len);
 			int len1 = (int) (len * Constant.SlideValue/100);
 			Constant.fenzi.setText("" + len1);
@@ -65,15 +65,21 @@ public class SlideChangeUtil {
 			Constant.beiSlideValue = percent;
 			System.out.println("bei slide percent = " + percent);
 			int len = 0;
-			String user = "";
-			for(int i = 0; i < Constant.CheckBoxList.size(); i++) {
-				if(Constant.CheckBoxList.get(i).isSelected()) {
-					len++;
-					user = user + Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0] + ",";
-				}
+//			String user = "";
+//			for(int i = 0; i < Constant.CheckBoxList.size(); i++) {
+//				if(Constant.CheckBoxList.get(i).isSelected()) {
+//					len++;
+//					user = user + Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0] + ",";
+//				}
+//			}
+//			System.out.println("bei user = " + user);
+//			Constant.AnalysisMix.setBeiUser(user);
+			if(Constant.AnalysisMix.getBeiUser() == null || 
+					"".equals(Constant.AnalysisMix.getBeiUser())) {
+				System.out.println("bei 长度为0");
+			}else {
+				len = Constant.AnalysisMix.getBeiUser().split(",").length;
 			}
-			System.out.println("bei user = " + user);
-			Constant.AnalysisMix.setBeiUser(user);
 			Constant.fenmu.setText("" + len);
 			int len1 = (int) (len * Constant.beiSlideValue/100);
 			Constant.fenzi.setText("" + len1);
