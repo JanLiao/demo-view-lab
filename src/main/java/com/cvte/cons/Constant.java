@@ -30,6 +30,7 @@ public class Constant {
 	//弃用
 	public static Integer InitStyle = 0;
 	
+	// 0-shipan  1-shibei  3-amd  4-avg 5-mask 6-all
 	public static int CurrTab = 0;
 	
 	//view falg
@@ -69,6 +70,7 @@ public class Constant {
 	//左侧radio
 	public static JFXRadioButton radio = null;
 	public static JFXRadioButton maskradio = null;
+	public static JFXRadioButton avgradio = null;
 	public static double SlideValue = 50;
 	public static double beiSlideValue = 50;
 	

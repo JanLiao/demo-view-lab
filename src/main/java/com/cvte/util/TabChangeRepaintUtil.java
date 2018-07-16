@@ -9,6 +9,7 @@ import java.util.List;
 import com.cvte.cons.Constant;
 import com.cvte.entity.CircleData;
 import com.cvte.entity.LineData;
+import com.cvte.entity.Mask;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,13 +35,21 @@ public class TabChangeRepaintUtil {
 		//重绘右侧
 		if("视   盘".equals(text)) {
 			Constant.CurrTab = 0;
+			int size = Constant.CheckBoxList.size();
+			for(int i = 0; i < size; i++) {
+				Constant.CheckBoxList.get(i).setDisable(false);
+				Constant.LeftList.get(i).setDisable(false);
+			}
+			Constant.radio.setDisable(false);
+			Constant.maskradio.setDisable(false);
+			Constant.avgradio.setDisable(false);
+			Constant.slider.setDisable(false);
 			Constant.slider.setValue(Constant.SlideValue);
 						
 			tabChangeRefreshCover();
 			
 			System.out.println(" shipan " + Constant.AnalysisMix.getPanUser());
 			//还原CheckBox状态
-			int size = Constant.CheckBoxList.size();
 			for(int i = 0; i < size; i++) {
 				String us = Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0];
 				if(checkBox(us, Constant.AnalysisMix.getPanUser())) {
@@ -88,12 +97,20 @@ public class TabChangeRepaintUtil {
 		}
 		else if("视   杯".equals(text)) {
 			Constant.CurrTab = 1;
+			int size = Constant.CheckBoxList.size();
+			for(int i = 0; i < size; i++) {
+				Constant.CheckBoxList.get(i).setDisable(false);
+				Constant.LeftList.get(i).setDisable(false);
+			}
+			Constant.radio.setDisable(false);
+			Constant.maskradio.setDisable(false);
+			Constant.avgradio.setDisable(false);
+			Constant.slider.setDisable(false);
 			Constant.slider.setValue(Constant.beiSlideValue);			
 			
 			tabChangeRefreshCover();
 			System.out.println("shibei " + Constant.AnalysisMix.getBeiUser());
 			//还原CheckBox状态
-			int size = Constant.CheckBoxList.size();
 			for(int i = 0; i < size; i++) {
 				String us = Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0];
 				if(checkBox(us, Constant.AnalysisMix.getBeiUser())) {
@@ -140,11 +157,20 @@ public class TabChangeRepaintUtil {
 			repaintBei();
 		}
 		else if("黄 斑 中 心".equals(text)) {
-			Constant.CurrTab = 2;
+			Constant.CurrTab = 2;			
+			int size = Constant.CheckBoxList.size();
+			for(int i = 0; i < size; i++) {
+				Constant.CheckBoxList.get(i).setDisable(false);
+				Constant.LeftList.get(i).setDisable(false);
+			}
+			Constant.radio.setDisable(false);
+			Constant.maskradio.setDisable(false);
+			Constant.avgradio.setDisable(false);
+			Constant.slider.setDisable(true);
+			
 			tabChangeRefreshCover();
 			System.out.println("center  " + Constant.AnalysisMix.getCenterUser());
 			//还原CheckBox状态
-			int size = Constant.CheckBoxList.size();
 			for(int i = 0; i < size; i++) {
 				String us = Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0];
 				if(checkBox(us, Constant.AnalysisMix.getCenterUser())) {
@@ -174,12 +200,21 @@ public class TabChangeRepaintUtil {
 			Constant.radio.setDisable(false);
 			repaintCenter();
 		}
-		else if("ALL".equals(text)) {
+		else if("AVG".equals(text)) {
 			Constant.CurrTab = 3;
 			tabChangeRefreshCover();
 			System.out.println("ALl  = " + Constant.AnalysisMix.getAllLabelUser());
 			//还原CheckBox状态
 			int size = Constant.CheckBoxList.size();
+			for(int i = 0; i < size; i++) {
+				Constant.CheckBoxList.get(i).setDisable(true);
+				Constant.LeftList.get(i).setDisable(true);
+			}
+			Constant.radio.setDisable(true);
+			Constant.maskradio.setDisable(true);
+			Constant.avgradio.setDisable(true);
+			Constant.slider.setDisable(true);
+			
 			for(int i = 0; i < size; i++) {
 				String us = Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0];
 				if(checkBox(us, Constant.AnalysisMix.getAllLabelUser())) {
@@ -196,18 +231,127 @@ public class TabChangeRepaintUtil {
 					Constant.CheckBoxList.get(i).selectedProperty().addListener(Constant.ListenerList.get(i));
 				}
 			}
-			//重绘当前tab
-			if(Constant.radio.isSelected()) {  //判断重叠radio是否被选中
-				//RadioChangeRepaintUtil.overLapSoleRepaint(3);
-				System.out.println("ALL 重叠不绘");
-			}
-			else {
-				System.out.println("tab4 canvas 重绘  平均中心");
-				RadioChangeRepaintUtil.avgSoleRepaintNew(3);
-			}
+			
+			RadioChangeRepaintUtil.repaintAvgNow();
 			
 			//隐藏重叠radio
+			//Constant.radio.setDisable(true);
+			repaintAll();
+		}else if("MASK".equals(text)) {
+			Constant.CurrTab = 4;
+			int size = Constant.CheckBoxList.size();
+			for(int i = 0; i < size; i++) {
+				Constant.CheckBoxList.get(i).setDisable(true);
+				Constant.LeftList.get(i).setDisable(true);
+			}
 			Constant.radio.setDisable(true);
+			Constant.maskradio.setDisable(true);
+			Constant.avgradio.setDisable(true);
+			Constant.slider.setDisable(true);
+			
+			if(Constant.AnalysisMix.getPanUser() == null || 
+					"".equals(Constant.AnalysisMix.getPanUser())) {
+				System.out.println("未融合  进行初始化");
+				String panUser = "";
+				for(int i = 0; i < size; i++) {
+					panUser += Constant.LeftList.get(i).getText() + ",";
+				}
+				Constant.AnalysisMix.setPanUser(panUser);
+				
+				//MaskUtil.generateData();
+			}else {
+				//MaskUtil.generateData();
+			}
+			
+			if(Constant.AnalysisMix.getBeiUser() == null || 
+					"".equals(Constant.AnalysisMix.getBeiUser())) {
+				System.out.println("未融合  进行初始化");
+				String beiUser = "";
+				for(int i = 0; i < size; i++) {
+					beiUser += Constant.LeftList.get(i).getText() + ",";
+				}
+				Constant.AnalysisMix.setBeiUser(beiUser);
+				
+				//MaskUtil.generateData();
+			}else {
+				//MaskUtil.generateData();
+			}
+			
+			if(Constant.panAvg == null) {			
+				System.out.println("pan avg is null");
+				CircleData pan = LabelUtil.getAvgCircleData("shipan");
+				Constant.panAvg = pan;
+			}
+//			if(Constant.beiAvg == null) {
+//				System.out.println("bei avg is null");
+//			}
+			// 设置bei avg
+			CircleData bei = LabelUtil.getAvgCircleData("shibei");
+			Constant.beiAvg = bei;
+			// Mask repaint tab
+			RadioChangeRepaintUtil.tab5RepaintMask();
+			
+			//右侧repaint
+			repaintAll();
+		}else if("ALL".equals(text)) {
+			Constant.CurrTab = 5;
+			int size = Constant.CheckBoxList.size();
+			for(int i = 0; i < size; i++) {
+				Constant.CheckBoxList.get(i).setDisable(true);
+				Constant.LeftList.get(i).setDisable(true);
+			}
+			Constant.radio.setDisable(true);
+			Constant.maskradio.setDisable(true);
+			Constant.avgradio.setDisable(true);
+			Constant.slider.setDisable(true);
+			
+			if(Constant.AnalysisMix.getPanUser() == null || 
+					"".equals(Constant.AnalysisMix.getPanUser())) {
+				System.out.println("未融合  进行初始化");
+				String panUser = "";
+				for(int i = 0; i < size; i++) {
+					panUser += Constant.LeftList.get(i).getText() + ",";
+				}
+				Constant.AnalysisMix.setPanUser(panUser);
+								
+			}
+			
+			if(Constant.AnalysisMix.getBeiUser() == null || 
+					"".equals(Constant.AnalysisMix.getBeiUser())) {
+				System.out.println("未融合  进行初始化");
+				String beiUser = "";
+				for(int i = 0; i < size; i++) {
+					beiUser += Constant.LeftList.get(i).getText() + ",";
+				}
+				Constant.AnalysisMix.setBeiUser(beiUser);
+				
+			}
+			
+			if(Constant.panAvg == null) {					
+				CircleData pan = LabelUtil.getAvgCircleData("shipan");
+				Constant.panAvg = pan;
+			}
+//			if(Constant.beiAvg == null) {					
+//			}
+			// 设置bei avg
+			CircleData bei = LabelUtil.getAvgCircleData("shibei");
+			Constant.beiAvg = bei;
+			
+			//设置curMask
+			Mask mask = Constant.AnalysisMix.getMask();
+			int[][] curPanMask = MaskUtil.getCurMask("pan", mask);
+			int[][] curBeiMask = MaskUtil.getCurMask("bei", mask);
+			Constant.AnalysisMix.getMask().setCurPanMask(curPanMask);
+			Constant.AnalysisMix.getMask().setCurBeiMask(curBeiMask);
+			
+			// All repatint tab
+			RepaintMaskUtil.repaintAvgNow();
+			
+			// 下两方法用在repaintAvgNow
+			//RepaintMaskUtil.repaintMaskNow();
+			//RepaintMaskUtil.repaintAllNow();
+			
+			//右侧repaint
 			repaintAll();
 		}
 	}

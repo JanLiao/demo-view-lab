@@ -51,6 +51,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -151,12 +152,9 @@ public class MarkMix {
         tabPane.getTabs().add(tab3);
         
         Tab tab4 = new Tab();
-        tab4.setText("ALL");
-        Canvas canvas4 = new Canvas(530, 530);
-    	
+        tab4.setText("AVG");
+        Canvas canvas4 = new Canvas(530, 530);    	
     	tabCanvas.add(canvas4);
-    	//初始化Constant TabCanvas
-    	Constant.TabCanvas = tabCanvas;
     	
         VBox pane4 = new VBox();
         pane4.setAlignment(Pos.CENTER);
@@ -165,6 +163,35 @@ public class MarkMix {
         tab4.setContent(rippler8);
         JFXDepthManager.setDepth(rippler8, 5);
         tabPane.getTabs().add(tab4);
+        
+        Tab tab5 = new Tab();
+        tab5.setText("MASK");
+        Canvas canvas5 = new Canvas(530, 530);
+    	
+    	tabCanvas.add(canvas5);        
+        VBox pane5 = new VBox();
+        pane5.setAlignment(Pos.CENTER);
+        pane5.getChildren().add(canvas5);
+        JFXRippler rippler9 = new JFXRippler(pane5);
+        tab5.setContent(rippler9);
+        JFXDepthManager.setDepth(rippler9, 5);
+        tabPane.getTabs().add(tab5);
+        
+        Tab tab6 = new Tab();
+        tab6.setText("ALL");
+        Canvas canvas6 = new Canvas(530, 530);
+    	
+    	tabCanvas.add(canvas6);
+    	//初始化Constant TabCanvas
+    	Constant.TabCanvas = tabCanvas;
+        
+        VBox pane6 = new VBox();
+        pane6.setAlignment(Pos.CENTER);
+        pane6.getChildren().add(canvas6);
+        JFXRippler rippler10 = new JFXRippler(pane6);
+        tab6.setContent(rippler10);
+        JFXDepthManager.setDepth(rippler10, 5);
+        tabPane.getTabs().add(tab6);
         
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         selectionModel.select(0);
@@ -227,6 +254,7 @@ public class MarkMix {
         javaRadio.setSelected(true);
         javaRadio.setStyle("-fx-text-fill: GREEN;-fx-font-size: 18;");
         javaRadio.setToggleGroup(group);
+        Constant.avgradio = javaRadio;
 
         JFXRadioButton jfxRadio = new JFXRadioButton("重  叠");
         jfxRadio.setPadding(new Insets(10));
@@ -387,11 +415,18 @@ public class MarkMix {
         });
         area2.getChildren().add(jfxCombo);
         
-        Label lbt = new Label("  当前: " + Constant.AnalysisMix.getImgName());
+        String tmpstr = Constant.AnalysisMix.getImgName();
+        Label lbt = new Label("");
+        if(tmpstr.length() > 10) {
+        	lbt.setText("  当前: " + tmpstr.substring(0, 10) + "...");
+        }else {
+        	lbt.setText("  当前: " + tmpstr);
+        }
+        lbt.setTooltip(new Tooltip(tmpstr));
         lbt.setStyle("-fx-text-fill: #9370db;-fx-font-size: 18;");
         area2.getChildren().add(lbt);
         
-        Label labelText = new Label("  " + (Constant.AnalysisMix.getFlag() + 1) 
+        Label labelText = new Label("      " + (Constant.AnalysisMix.getFlag() + 1) 
         + " / " + Constant.AnalysisMix.getImgNums());
         labelText.setStyle("-fx-text-fill: GREEN;-fx-font-size: 18;");
         labelText.setAlignment(Pos.CENTER);

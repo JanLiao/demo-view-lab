@@ -14,7 +14,6 @@ import com.cvte.util.BtnUtil;
 import com.cvte.util.CheckBoxChangeUtil;
 import com.cvte.util.ComboxChangeUtil;
 import com.cvte.util.LabelUtil;
-import com.cvte.util.MarkUtil;
 import com.cvte.util.RadioChangeRepaintUtil;
 import com.cvte.util.TabChangeRepaintUtil;
 import com.jfoenix.controls.JFXButton;

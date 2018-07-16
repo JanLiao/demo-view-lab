@@ -14,6 +14,167 @@ import com.cvte.entity.LineData;
 * @date: 2018年5月25日 下午9:11:21 
 */
 public class LabelUtil {
+	
+	public static CircleData getAvgNewCircleData(String name) {
+		
+		// 返回视盘视杯当前保存数据
+		if("shipan".equals(name)) {			
+			if("".equals(Constant.AnalysisMix.getPanUser()) || 
+					Constant.AnalysisMix.getPanUser() == null) {			
+				List<String> list = Constant.AnalysisMix.getAllLabelData();
+				List<CircleData> circleList = new ArrayList<CircleData>();
+				for(String s : list) {
+					circleList.add(strToObj(s, name));
+				}
+				CircleData circle = avgCircle(circleList);
+				circle.setName(name);
+				return circle;
+			}else {
+				CircleData circle = getCurAvgData(name);
+				circle.setName(name);
+				return circle;
+			}
+		}else {
+			if("".equals(Constant.AnalysisMix.getBeiUser()) || 
+					Constant.AnalysisMix.getBeiUser() == null) {			
+				List<String> list = Constant.AnalysisMix.getAllLabelData();
+				List<CircleData> circleList = new ArrayList<CircleData>();
+				for(String s : list) {
+					circleList.add(strToObj(s, name));
+				}		
+				CircleData circle = avgCircle(circleList);
+				circle.setName(name);
+				return circle;
+			}else {
+				CircleData circle = getCurAvgData(name);
+				circle.setName(name);
+				return circle;
+			}
+		}
+	}
+	
+	// 将list linedata转换成avg linedata
+	public static LineData changeAvgLineData(List<LineData> lineList) {
+		LineData line = new LineData();
+        int size = lineList.size();
+		
+		double angle = 0;
+		for(LineData data : lineList) {
+			angle = angle + data.getAngle();
+		}
+		line.setAngle(angle/size);
+		
+		double height = 0;
+		for(LineData data : lineList) {
+			height += data.getHeight();
+		}
+		line.setHeight(height/size);
+		
+		double left = 0;
+		for (LineData data : lineList) {
+			left += data.getLeft();
+		}
+		line.setLeft(left/size);
+		
+		double opacity = 0;
+		for(LineData data : lineList) {
+			opacity += data.getOpacity();
+		}
+		line.setOpacity(opacity/size);
+		
+		double scaleX = 0;
+		for(LineData data : lineList) {
+			scaleX += data.getScaleX();
+		}
+		line.setScaleX(scaleX/size);
+		
+		double scaleY = 0;
+		for(LineData data : lineList) {
+			scaleY += data.getScaleY();
+		}
+		line.setScaleY(scaleY/size);
+		
+		double strokeWidth = 0;
+		for(LineData data : lineList) {
+			strokeWidth += data.getStrokeWidth();
+		}
+		line.setStrokeWidth(strokeWidth/size + 1);
+		
+		double top = 0;
+		for(LineData data : lineList) {
+			top += data.getTop();
+		}
+		line.setTop(top/size);
+		
+		double width = 0;
+		for(LineData data : lineList) {
+			width += data.getWidth();
+		}
+		line.setWidth(width/size);
+		return line;
+	}
+	
+	// 获取当前选中AMD
+	public static LineData getCurAvgLineData(String name) {
+		List<String> list = Constant.AnalysisMix.getAllLabelData();
+		List<LineData> lineList = new ArrayList<LineData>();
+		if("".equals(Constant.AnalysisMix.getCenterUser()) || 
+				Constant.AnalysisMix.getCenterUser() == null) {			
+			for(String s : list) {
+				lineList.add(strToLine(s, name));
+			}
+		}else {
+			int len = Constant.LeftList.size();
+			String[] s = Constant.AnalysisMix.getCenterUser().split(",");
+			for(int i =0; i < len; i++) {
+				if (checkUser(Constant.LeftList.get(i).getText(), s)) {
+					lineList.add(strToLine(list.get(i), name));
+				}
+			}
+		}
+		LineData line = changeAvgLineData(lineList);
+		return line;
+	}
+	
+	// 获取当前选中的视盘和视杯
+	public static CircleData getCurAvgData(String name) {
+		List<CircleData> circleList = new ArrayList<CircleData>();
+		List<String> list = Constant.AnalysisMix.getAllLabelData();
+		int len = Constant.LeftList.size();
+		if("shipan".equals(name)) {
+			System.out.println("pan = " + Constant.AnalysisMix.getPanUser());
+			String[] s = Constant.AnalysisMix.getPanUser().split(",");
+			for (int i = 0; i < len; i++) {
+				System.out.println("current text = " + Constant.LeftList.get(i).getText());
+				if (checkUser(Constant.LeftList.get(i).getText(), s)) {
+					circleList.add(strToObj(list.get(i), name));
+				}
+			}
+		}else if("shibei".equals(name)) {
+			System.out.println("bei = " + Constant.AnalysisMix.getBeiUser());
+			String[] s = Constant.AnalysisMix.getBeiUser().split(",");
+			for (int i = 0; i < len; i++) {
+				if (checkUser(Constant.LeftList.get(i).getText(), s)) {
+					circleList.add(strToObj(list.get(i), name));
+				}
+			}
+		}
+		
+		CircleData circle = avgCircle(circleList);
+		circle.setName(name);
+		return circle;
+	}
+	
+	public static boolean checkUser(String user, String[] s) {
+		boolean flag = false;
+		for(String st : s) {
+			if(user.equals(st)) {
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
 
 	//初始化circle   视盘、视杯
 	public static CircleData getAvgCircleData(String name) {
@@ -55,6 +216,7 @@ public class LabelUtil {
 	private static CircleData avgCircle(List<CircleData> circleList) {
 		CircleData circle = new CircleData();
 		int size = circleList.size();
+		System.out.println("size 长度 = " + size);
 		
 		double angle = 0;
 		List<Double> list = new ArrayList<>();

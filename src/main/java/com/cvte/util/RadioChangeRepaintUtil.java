@@ -346,7 +346,7 @@ public class RadioChangeRepaintUtil {
 	
 	public static void overLapSoleRepaint(int offset) {
 		Constant.TabCanvas.get(offset).getGraphicsContext2D().clearRect(0, 0, 530, 530);
-		if(offset == 0) {			
+		if(offset == 0) {
 			tab1OverLapRepaint(Constant.TabCanvas.get(offset).getGraphicsContext2D());
 		}
 		else if(offset == 1) {
@@ -800,5 +800,131 @@ public class RadioChangeRepaintUtil {
 		}
 		int num = (int) (size*percent/100);
 		MaskUtil.paint(gc2, "shipan", num);
+	}
+
+	public static void repaintAvgNow() {
+		// 清除tab canvas
+		int len = Constant.TabCanvas.size();
+		for (int i = 0; i < len; i++) {
+			Constant.TabCanvas.get(i).getGraphicsContext2D().clearRect(0, 0, 530, 530);
+		}
+
+		// tab canvas重绘平均
+		tab4RepaintAVGNew(Constant.TabCanvas.get(3).getGraphicsContext2D());
+	}
+	
+	public static void tab5RepaintMask() {
+		Mask mask = Constant.AnalysisMix.getMask();
+		int[][] curPanMask = MaskUtil.getCurMask("pan", mask);
+		int[][] curBeiMask = MaskUtil.getCurMask("bei", mask);
+		Constant.AnalysisMix.getMask().setCurPanMask(curPanMask);
+		Constant.AnalysisMix.getMask().setCurBeiMask(curBeiMask);
+		//MaskUtil.generateData();
+		//清除tab1和tab2
+		Constant.TabCanvas.get(4).getGraphicsContext2D().clearRect(0, 0, 530, 530);
+		
+		RepaintMaskUtil.maskRepaint(Constant.TabCanvas.get(4).getGraphicsContext2D());
+	}
+	
+	public static void tab4RepaintAVGNew(GraphicsContext gc4) {
+		double width4 = 530;
+        double height4 = 530;
+        File fileAll = new File(Constant.AnalysisMix.getImgPath());
+        InputStream fisAll = null;
+		try {
+			fisAll = new FileInputStream(fileAll);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+        Image img4 = new Image(fisAll, width4, height4, true, true);
+        //获取当前图片label视盘数据
+        CircleData allpan = LabelUtil.getAvgNewCircleData("shipan");
+        gc4.drawImage(img4, 0, 0);
+        gc4.save();
+        gc4.setLineWidth(allpan.getStrokeWidth());
+        gc4.setStroke(Color.rgb(51, 171, 160));
+    	double relativeX5 = allpan.getLeft();
+    	double relativeY5 = allpan.getTop();
+    	gc4.setTransform(new Affine(new Rotate(allpan.getAngle(), relativeX5, relativeY5)));
+    	gc4.strokeOval(relativeX5, relativeY5, allpan.getRadius()*allpan.getScaleX()*2, allpan.getRadius()*allpan.getScaleY()*2);
+    	gc4.restore();
+        
+        //获取当前图片label视杯数据
+        CircleData allbei = LabelUtil.getAvgNewCircleData("shibei");
+        gc4.save();
+        gc4.setLineWidth(allbei.getStrokeWidth());
+        gc4.setStroke(Color.rgb(0, 0, 255));
+    	double relativeX4 = allbei.getLeft();
+    	double relativeY4 = allbei.getTop();
+    	gc4.setTransform(new Affine(new Rotate(allbei.getAngle(), relativeX4, relativeY4)));
+    	gc4.strokeOval(relativeX4, relativeY4, allbei.getRadius()*allbei.getScaleX()*2, allbei.getRadius()*allbei.getScaleY()*2);
+    	gc4.restore();
+    	
+    	//获取当前图片label 黄斑中心数据
+    	LineData allLine = LabelUtil.getCurAvgLineData("amd");
+    	gc4.setLineWidth(1);
+    	//两条线
+    	//gc3.save();
+    	gc4.setStroke(Color.rgb(255, 0, 255));
+    	double relativeX8 = allLine.getLeft();
+    	double relativeY8 = allLine.getTop();
+    	gc4.strokeLine(relativeX8, relativeY8 + allLine.getHeight()*allLine.getScaleY()/2, 
+    			relativeX8 + allLine.getWidth()*allLine.getScaleX(), relativeY8 + allLine.getHeight()*allLine.getScaleY()/2);
+        //gc3.restore();
+        //gc3.save();
+    	gc4.strokeLine(relativeX8 + allLine.getWidth()*allLine.getScaleX()/2, relativeY8, 
+    			relativeX8 + allLine.getWidth()*allLine.getScaleX()/2, relativeY8 + allLine.getHeight()*allLine.getScaleY());
+        //gc3.restore();
+	}
+
+	private static void tab4RepaintAVG(GraphicsContext gc4) {
+		double width4 = 530;
+        double height4 = 530;
+        File fileAll = new File(Constant.AnalysisMix.getImgPath());
+        InputStream fisAll = null;
+		try {
+			fisAll = new FileInputStream(fileAll);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+        Image img4 = new Image(fisAll, width4, height4, true, true);
+        //获取当前图片label视盘数据
+        CircleData allpan = LabelUtil.getAvgNewCircleData("shipan");
+        gc4.drawImage(img4, 0, 0);
+        gc4.save();
+        gc4.setLineWidth(allpan.getStrokeWidth());
+        gc4.setStroke(Color.rgb(51, 171, 160));
+    	double relativeX5 = allpan.getLeft();
+    	double relativeY5 = allpan.getTop();
+    	gc4.setTransform(new Affine(new Rotate(allpan.getAngle(), relativeX5, relativeY5)));
+    	gc4.strokeOval(relativeX5, relativeY5, allpan.getRadius()*allpan.getScaleX()*2, allpan.getRadius()*allpan.getScaleY()*2);
+    	gc4.restore();
+        
+        //获取当前图片label视杯数据
+        CircleData allbei = LabelUtil.getAvgCircleData("shibei");
+        gc4.save();
+        gc4.setLineWidth(allbei.getStrokeWidth());
+        gc4.setStroke(Color.rgb(0, 0, 255));
+    	double relativeX4 = allbei.getLeft();
+    	double relativeY4 = allbei.getTop();
+    	gc4.setTransform(new Affine(new Rotate(allbei.getAngle(), relativeX4, relativeY4)));
+    	gc4.strokeOval(relativeX4, relativeY4, allbei.getRadius()*allbei.getScaleX()*2, allbei.getRadius()*allbei.getScaleY()*2);
+    	gc4.restore();
+    	
+    	//获取当前图片label 黄斑中心数据
+    	LineData allLine = LabelUtil.getAvgLineData("amd");
+    	gc4.setLineWidth(1);
+    	//两条线
+    	//gc3.save();
+    	gc4.setStroke(Color.rgb(255, 0, 255));
+    	double relativeX8 = allLine.getLeft();
+    	double relativeY8 = allLine.getTop();
+    	gc4.strokeLine(relativeX8, relativeY8 + allLine.getHeight()*allLine.getScaleY()/2, 
+    			relativeX8 + allLine.getWidth()*allLine.getScaleX(), relativeY8 + allLine.getHeight()*allLine.getScaleY()/2);
+        //gc3.restore();
+        //gc3.save();
+    	gc4.strokeLine(relativeX8 + allLine.getWidth()*allLine.getScaleX()/2, relativeY8, 
+    			relativeX8 + allLine.getWidth()*allLine.getScaleX()/2, relativeY8 + allLine.getHeight()*allLine.getScaleY());
+        //gc3.restore();
 	}
 }

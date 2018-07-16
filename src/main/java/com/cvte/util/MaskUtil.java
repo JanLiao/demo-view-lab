@@ -76,7 +76,7 @@ public class MaskUtil {
 				Integer[][] tmp = mask.getAllSolePanMask().get(st);
 				for(int i = 0; i < 530; i++) {
 					for(int j = 0; j < 530; j++) {
-					curMask[i][j] = curMask[i][j] + tmp[i][j].intValue();
+						curMask[i][j] = curMask[i][j] + tmp[i][j].intValue();						
 					}
 				}
 			}
@@ -87,7 +87,7 @@ public class MaskUtil {
 				Integer[][] tmp = mask.getAllSoleBeiMask().get(st);
 				for(int i = 0; i < 530; i++) {
 					for(int j = 0; j < 530; j++) {
-					curMask[i][j] = curMask[i][j] + tmp[i][j].intValue();
+						curMask[i][j] = curMask[i][j] + tmp[i][j].intValue();						
 					}
 				}
 			}
@@ -175,9 +175,7 @@ public class MaskUtil {
 						}
 					}
 				}
-			}
-			
-			
+			}	
 		}
 		else if("shibei".equals(name)) {
 			Mask mask = Constant.AnalysisMix.getMask();
