@@ -35,6 +35,7 @@ public class TabChangeRepaintUtil {
 		//重绘右侧
 		if("视   盘".equals(text)) {
 			Constant.CurrTab = 0;
+			System.out.println(" slide first = " + Constant.SlideValue + " = " + Constant.beiSlideValue);
 			int size = Constant.CheckBoxList.size();
 			for(int i = 0; i < size; i++) {
 				Constant.CheckBoxList.get(i).setDisable(false);
@@ -150,7 +151,6 @@ public class TabChangeRepaintUtil {
 				}
 			}
 						
-			
 			int size1 = 0;
 			for(int i = 0; i < Constant.CheckBoxList.size(); i++) {
 				if(Constant.CheckBoxList.get(i).isSelected()) {
@@ -193,7 +193,7 @@ public class TabChangeRepaintUtil {
 				Constant.LeftList.get(i).setDisable(false);
 			}
 			Constant.radio.setDisable(false);
-			Constant.maskradio.setDisable(false);
+			Constant.maskradio.setDisable(true);
 			Constant.avgradio.setDisable(false);
 			Constant.slider.setDisable(true);
 			
@@ -461,7 +461,7 @@ public class TabChangeRepaintUtil {
 	}
 
 	//重绘all
-	private static void repaintAll() {
+	public static void repaintAll() {
 		int len = Constant.canvasList.size();
 		for(int i = 0; i < len; i++) {
 			GraphicsContext gc = Constant.canvasList.get(i).getGraphicsContext2D();

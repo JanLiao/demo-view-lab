@@ -10,6 +10,7 @@ import com.cvte.entity.Mask;
 public class SlideChangeUtil {
 
 	public static void repaint(double percent) {
+		System.out.println("percent = " + percent + " tab = " + Constant.CurrTab);
 		System.out.println("slide first = " + Constant.SlideValue + "=" + Constant.beiSlideValue);
 		if(Constant.CurrTab == 0) {
 			System.out.println("slide 当前tab = 0");
@@ -17,7 +18,9 @@ public class SlideChangeUtil {
 		}
 		else if(Constant.CurrTab == 1) {
 			System.out.println("slide 当前tab = 1");
+			System.out.println("slide pre12 = " + Constant.SlideValue + "=" + Constant.beiSlideValue);
 			Constant.beiSlideValue = percent;
+			System.out.println("slide pre11 = " + Constant.SlideValue + "=" + Constant.beiSlideValue);
 		}
 		
 		System.out.println("slide pre = " + Constant.SlideValue + "=" + Constant.beiSlideValue);

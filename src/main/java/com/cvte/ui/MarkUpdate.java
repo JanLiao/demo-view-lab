@@ -172,6 +172,7 @@ public class MarkUpdate {
 
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		selectionModel.select(0);
+		//selectionModel.select(5);
 
 		// 监听tab change
 		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
@@ -269,7 +270,7 @@ public class MarkUpdate {
     		public void changed(ObservableValue<? extends Number> ov, Number old, Number newvalue) {  
     			
             	double s = horRightSlider.getValue();
-    			Constant.SlideValue = s;
+    			//Constant.SlideValue = s;
     			SlideChangeUtil.repaint(s);
     		}
     	};
@@ -389,7 +390,7 @@ public class MarkUpdate {
 			}
 		}
 
-		jfxCombo.setPromptText("请选择一个作为标准");
+		jfxCombo.setPromptText("未选择");
 		jfxCombo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -526,6 +527,7 @@ public class MarkUpdate {
         task1.setCanvas(canvas1);
         //executor.execute(task1);
         executor.submit(task1);
+		//TabChangeRepaintUtil.tabRepaint("ALL");
         for(int i = 0; i < Constant.canvasList.size(); i++) {
         	PaintTask task = new PaintTask();
         	task.setCanvas(Constant.canvasList.get(i));

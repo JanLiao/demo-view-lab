@@ -226,17 +226,29 @@ public class RadioChangeRepaintUtil {
     	//两条线
     	//gc3.save();
     	gc3.setStroke(Color.rgb(255, 0, 255));
-    	double relativeX7 = line.getLeft()*4 - ((line.getLeft() + line.getWidth()*line.getScaleX()/2)*4 - 265);
-    	double relativeY7 = line.getTop()*4 - ((line.getTop() + line.getHeight()*line.getScaleY()/2)*4 - 265);
-    	System.out.println("line = " + line);
-    	System.out.println(relativeX7 + "=" + relativeY7);
-    	gc3.strokeLine(relativeX7, relativeY7 + line.getHeight()*line.getScaleY()*2, 
-    			relativeX7 + line.getWidth()*line.getScaleX()*4, relativeY7 + line.getHeight()*line.getScaleY()*2);
-        //gc3.restore();
-        //gc3.save();
-    	gc3.strokeLine(relativeX7 + line.getWidth()*line.getScaleX()*2, relativeY7, 
-    			relativeX7 + line.getWidth()*line.getScaleX()*2, relativeY7 + line.getHeight()*line.getScaleY()*4);
-        //gc3.restore();
+//    	double relativeX7 = line.getLeft()*4 - ((line.getLeft() + line.getWidth()*line.getScaleX()/2)*4 - 265);
+//    	double relativeY7 = line.getTop()*4 - ((line.getTop() + line.getHeight()*line.getScaleY()/2)*4 - 265);
+//    	System.out.println("line = " + line);
+//    	System.out.println(relativeX7 + "=" + relativeY7);
+//    	gc3.strokeLine(relativeX7, relativeY7 + line.getHeight()*line.getScaleY()*2, 
+//    			relativeX7 + line.getWidth()*line.getScaleX()*4, relativeY7 + line.getHeight()*line.getScaleY()*2);
+//        gc3.restore();
+//        gc3.save();
+//    	gc3.strokeLine(relativeX7 + line.getWidth()*line.getScaleX()*2, relativeY7, 
+//    			relativeX7 + line.getWidth()*line.getScaleX()*2, relativeY7 + line.getHeight()*line.getScaleY()*4);
+//        gc3.restore();
+    	
+    	double relativeX7 = line.getLeft();
+    	double relativeY7 = line.getTop();
+    	gc3.strokeLine(relativeX7, relativeY7 + line.getHeight()*line.getScaleY()/2, 
+    			relativeX7 + line.getWidth()*line.getScaleX(),
+    			relativeY7 + line.getHeight()*line.getScaleY()/2);
+        gc3.restore();
+        gc3.save();
+        gc3.strokeLine(relativeX7 + line.getWidth()*line.getScaleX()/2, relativeY7, 
+    			relativeX7 + line.getWidth()*line.getScaleX()/2,
+    			relativeY7 + line.getHeight()*line.getScaleY());
+        gc3.restore();
 	}
 	
 	//方法用途同上

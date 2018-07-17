@@ -29,12 +29,14 @@ import com.cvte.util.TabChangeRepaintUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXSlider.IndicatorPosition;
 import com.jfoenix.effects.JFXDepthManager;
+import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -417,7 +419,7 @@ public class MarkMix {
         	jfxCombo.getItems().add(new Label(s.split("=")[0]));
         }
 
-        jfxCombo.setPromptText("请选择一个作为标准");
+        jfxCombo.setPromptText("未选择");
         jfxCombo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -453,6 +455,16 @@ public class MarkMix {
         else {
         	mixStr = "已融合";
         }
+//        HBox burgerBox = new HBox();
+//        burgerBox.setSpacing(10);
+//        JFXHamburger h4 = new JFXHamburger();
+//        HamburgerNextArrowBasicTransition burgerTask3 = new HamburgerNextArrowBasicTransition(h4);
+//        //burgerTask3.setStyle("-fx-background-color: GREEN;-fx-pref-height: 15px;");
+//        burgerTask3.setRate(-1);
+//        h4.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+//            burgerTask3.setRate(burgerTask3.getRate() * -1);
+//            burgerTask3.play();
+//        });
         Label analysis = new Label(mixStr);
         if("已融合".equals(mixStr)) {
         	analysis.setStyle("-fx-text-fill: RED;-fx-font-size: 20;");
@@ -460,6 +472,7 @@ public class MarkMix {
         else {
         	analysis.setStyle("-fx-text-fill: GREEN;-fx-font-size: 20;");
         }
+        //burgerBox.getChildren().addAll(h4, analysis);
         area1.setRight(analysis);
         
         rightContent.getChildren().add(area1);

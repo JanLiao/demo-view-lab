@@ -789,7 +789,7 @@ public class BtnUpdateUtil {
 		img.setCenterY(Constant.AnalysisMix.getCenterY());
 		img.setUpdateTime(format.format(new Date()));
 		img.setPercent("" + Constant.SlideValue);
-		img.setPercent("" + Constant.beiSlideValue);
+		img.setBeipercent("" + Constant.beiSlideValue);
 		ImgConsoleCSV.saveToCSV(img);
 		Constant.AnalysisMix.getImgMap().put(
 				Constant.AnalysisMix.getImgList().get(Constant.AnalysisMix.getFlag()), 1);
