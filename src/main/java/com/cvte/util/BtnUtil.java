@@ -246,6 +246,16 @@ public class BtnUtil {
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
 				Constant.AnalysisMix.setSaveModel(obj.getSaveModel());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 //				Constant.AnalysisView.setAllLabelUser(obj.getAllMixUser());
 //				Constant.AnalysisView.setBeiUser(obj.getBeiMixUser());
 //				Constant.AnalysisView.setCenterUser(obj.getCenterMixUser());
@@ -343,6 +353,16 @@ public class BtnUtil {
 			Constant.AnalysisMix.setPercent(obj.getPercent());
 			Constant.AnalysisMix.setBeiPercent(obj.getPercent());
 			Constant.AnalysisMix.setSaveModel(obj.getSaveModel());
+			if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+				Constant.SlideValue = 50;
+			}else {					
+				Constant.SlideValue = Double.parseDouble(obj.getPercent());
+			}
+			if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+				Constant.beiSlideValue = 50;
+			}else {					
+				Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+			}
 //			Constant.AnalysisView.setAllLabelUser(obj.getAllMixUser());
 //			Constant.AnalysisView.setBeiUser(obj.getBeiMixUser());
 //			Constant.AnalysisView.setCenterUser(obj.getCenterMixUser());
@@ -453,6 +473,16 @@ public class BtnUtil {
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
 				Constant.AnalysisMix.setSaveModel(obj.getSaveModel());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 //				Constant.AnalysisView.setAllLabelUser(obj.getAllMixUser());
 //				Constant.AnalysisView.setBeiUser(obj.getBeiMixUser());
 //				Constant.AnalysisView.setCenterUser(obj.getCenterMixUser());
@@ -609,6 +639,16 @@ public class BtnUtil {
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
 				Constant.AnalysisMix.setSaveModel(obj.getSaveModel());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 //				Constant.AnalysisView.setAllLabelUser(obj.getAllMixUser());
 //				Constant.AnalysisView.setBeiUser(obj.getBeiMixUser());
 //				Constant.AnalysisView.setCenterUser(obj.getCenterMixUser());
@@ -739,6 +779,8 @@ public class BtnUtil {
 			
 			Constant.AnalysisMix.setStandUser("");
 			//Constant.AnalysisView.setStandUser("");
+//			Constant.SlideValue = 50;
+//			Constant.beiSlideValue = 50;
 
 			//该处要改  读CSV文件
 			String tmp = Constant.AnalysisMix.getImgList().get(Constant.AnalysisMix.getFlag());
@@ -769,6 +811,16 @@ public class BtnUtil {
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
 				Constant.AnalysisMix.setSaveModel(obj.getSaveModel());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 				//Constant.SlideValue = Double.parseDouble(obj.getPercent());
 //				Constant.AnalysisView.setAllLabelUser(obj.getAllMixUser());
 //				Constant.AnalysisView.setBeiUser(obj.getBeiMixUser());

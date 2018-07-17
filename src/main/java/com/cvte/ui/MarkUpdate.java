@@ -264,7 +264,7 @@ public class MarkUpdate {
         //horRightSlider.setMinWidth(500);
         //horRightSlider.setIndicatorPosition(IndicatorPosition.RIGHT);
         radioBox.getChildren().add(horRightSlider);
-        horRightSlider.valueProperty().addListener(new ChangeListener<Number>() {  
+        ChangeListener<Number> slideListen = new ChangeListener<Number>() {  
     		@Override  
     		public void changed(ObservableValue<? extends Number> ov, Number old, Number newvalue) {  
     			
@@ -272,7 +272,18 @@ public class MarkUpdate {
     			Constant.SlideValue = s;
     			SlideChangeUtil.repaint(s);
     		}
-    	});
+    	};
+    	Constant.SlideListener = slideListen;
+    	horRightSlider.valueProperty().addListener(slideListen);
+//        horRightSlider.valueProperty().addListener(new ChangeListener<Number>() {  
+//    		@Override  
+//    		public void changed(ObservableValue<? extends Number> ov, Number old, Number newvalue) {  
+//    			
+//            	double s = horRightSlider.getValue();
+//    			Constant.SlideValue = s;
+//    			SlideChangeUtil.repaint(s);
+//    		}
+//    	});
         horRightSlider.setValue(Double.parseDouble(Constant.AnalysisMix.getPercent()));
         
         maskRadio.setOnAction(new EventHandler<ActionEvent>() {

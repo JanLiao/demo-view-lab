@@ -50,7 +50,10 @@ public class TabChangeRepaintUtil {
 			}else {
 				Constant.slider.setDisable(true);
 			}
-			Constant.slider.setValue(Constant.SlideValue);
+			System.out.println("shipan slide = " + Constant.SlideValue);
+			Constant.slider.valueProperty().removeListener(Constant.SlideListener);
+			Constant.slider.setValue(Constant.SlideValue);	
+			Constant.slider.valueProperty().addListener(Constant.SlideListener);
 						
 			tabChangeRefreshCover();
 			
@@ -102,6 +105,7 @@ public class TabChangeRepaintUtil {
 			repaintPan();
 		}
 		else if("视   杯".equals(text)) {
+			System.out.println("shipan slide first = " + Constant.SlideValue + " = " + Constant.beiSlideValue);
 			Constant.CurrTab = 1;
 			int size = Constant.CheckBoxList.size();
 			for(int i = 0; i < size; i++) {
@@ -118,10 +122,16 @@ public class TabChangeRepaintUtil {
 			}else {
 				Constant.slider.setDisable(true);
 			}
-			Constant.slider.setValue(Constant.beiSlideValue);			
+			System.out.println("shibei slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
+			
+			Constant.slider.valueProperty().removeListener(Constant.SlideListener);
+			Constant.slider.setValue(Constant.beiSlideValue);	
+			Constant.slider.valueProperty().addListener(Constant.SlideListener);
+			System.out.println("after slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
 			
 			tabChangeRefreshCover();
 			System.out.println("shibei " + Constant.AnalysisMix.getBeiUser());
+			System.out.println("aa slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
 			//还原CheckBox状态
 			for(int i = 0; i < size; i++) {
 				String us = Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0];
@@ -139,6 +149,7 @@ public class TabChangeRepaintUtil {
 					Constant.CheckBoxList.get(i).selectedProperty().addListener(Constant.ListenerList.get(i));
 				}
 			}
+						
 			
 			int size1 = 0;
 			for(int i = 0; i < Constant.CheckBoxList.size(); i++) {
@@ -157,16 +168,22 @@ public class TabChangeRepaintUtil {
 			else {
 				if(Constant.maskradio.isSelected()) {
 					System.out.println("tab2 canvas 重绘mask");
+					System.out.println("shipan slide pre = " + Constant.SlideValue);
 					RadioChangeRepaintUtil.maskRepaint();
+					System.out.println("shipan slide after = " + Constant.SlideValue);
 				}
 				else {
 					System.out.println("tab2 canvas 重绘  平均视杯");
+					System.out.println("cc slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
 					RadioChangeRepaintUtil.avgSoleRepaintNew(1);
+					System.out.println("dd slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
 				}
 			}
+			System.out.println("bb slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
 			
 			Constant.radio.setDisable(false);
 			repaintBei();
+			System.out.println("ee slide = " + Constant.SlideValue + "--" + Constant.beiSlideValue);
 		}
 		else if("黄 斑 中 心".equals(text)) {
 			Constant.CurrTab = 2;			

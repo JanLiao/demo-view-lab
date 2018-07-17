@@ -203,6 +203,16 @@ public class BtnUpdateUtil {
 				Constant.AnalysisMix.setStandUser(obj.getStandUser());
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 			}
 			
 			//mask
@@ -316,6 +326,16 @@ public class BtnUpdateUtil {
 					Constant.AnalysisView.setStandUser(obj.getStandUser());
 					Constant.AnalysisView.setPercent(obj.getPercent());
 					Constant.AnalysisView.setBeiPercent(obj.getBeipercent());
+					if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+						Constant.SlideValue = 50;
+					}else {					
+						Constant.SlideValue = Double.parseDouble(obj.getPercent());
+					}
+					if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+						Constant.beiSlideValue = 50;
+					}else {					
+						Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+					}
 					
 					//View mask数据生成
 				    MaskViewUtil.generateData();
@@ -414,6 +434,16 @@ public class BtnUpdateUtil {
 				Constant.AnalysisMix.setStandUser(obj.getStandUser());
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 			}
 			
 			//生成当前图片mask相关数据
@@ -529,6 +559,16 @@ public class BtnUpdateUtil {
 				Constant.AnalysisMix.setStandUser(obj.getStandUser());
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 			}
 			
 			//生成当前图片mask相关数据
@@ -691,6 +731,16 @@ public class BtnUpdateUtil {
 				Constant.AnalysisMix.setStandUser(obj.getStandUser());
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 			}
 			
 			//生成当前图片mask相关数据
@@ -845,6 +895,16 @@ public class BtnUpdateUtil {
 				Constant.AnalysisMix.setStandUser(obj.getStandUser());
 				Constant.AnalysisMix.setPercent(obj.getPercent());
 				Constant.AnalysisMix.setBeiPercent(obj.getBeipercent());
+				if("".equals(obj.getPercent()) || obj.getPercent() == null) {
+					Constant.SlideValue = 50;
+				}else {					
+					Constant.SlideValue = Double.parseDouble(obj.getPercent());
+				}
+				if("".equals(obj.getBeipercent()) || obj.getBeipercent() == null) {
+					Constant.beiSlideValue = 50;
+				}else {					
+					Constant.beiSlideValue = Double.parseDouble(obj.getBeipercent());
+				}
 			}
 			
 			//生成当前图片mask相关数据

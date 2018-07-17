@@ -87,6 +87,9 @@ public class Constant {
 	public static List<ChangeListener<Boolean>> ListenerList = new ArrayList<ChangeListener<Boolean>>();
 	public static List<ChangeListener<Boolean>> ListenerLeftList = new ArrayList<ChangeListener<Boolean>>();
 	
+	// slide 监听
+	public static ChangeListener<Number> SlideListener = null;
+	
 	//保存shipan shibei center all 所选用户     弃用
 //	public static String panUser = "";
 //	public static String beiUser = "";

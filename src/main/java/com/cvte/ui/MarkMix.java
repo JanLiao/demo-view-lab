@@ -290,7 +290,8 @@ public class MarkMix {
         Constant.fenmu = vbLabel2;
         vb.getChildren().add(vbLabel2);
         radioBox.getChildren().add(vb);
-        horRightSlider.valueProperty().addListener(new ChangeListener<Number>() {  
+        
+        ChangeListener<Number> slideListen = new ChangeListener<Number>() {  
     		@Override  
     		public void changed(ObservableValue<? extends Number> ov, Number old, Number newvalue) {  
     			
@@ -298,7 +299,18 @@ public class MarkMix {
     			//Constant.SlideValue = s;
     			SlideChangeUtil.repaint(s);
     		}
-    	});
+    	};
+    	Constant.SlideListener = slideListen;
+    	horRightSlider.valueProperty().addListener(slideListen);
+//        horRightSlider.valueProperty().addListener(new ChangeListener<Number>() {  
+//    		@Override  
+//    		public void changed(ObservableValue<? extends Number> ov, Number old, Number newvalue) {  
+//    			
+//            	double s = horRightSlider.getValue();
+//    			//Constant.SlideValue = s;
+//    			SlideChangeUtil.repaint(s);
+//    		}
+//    	});
         
         javaRadio.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

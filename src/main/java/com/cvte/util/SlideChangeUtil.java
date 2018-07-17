@@ -10,12 +10,18 @@ import com.cvte.entity.Mask;
 public class SlideChangeUtil {
 
 	public static void repaint(double percent) {
+		System.out.println("slide first = " + Constant.SlideValue + "=" + Constant.beiSlideValue);
 		if(Constant.CurrTab == 0) {
+			System.out.println("slide 当前tab = 0");
 			Constant.SlideValue = percent;
 		}
 		else if(Constant.CurrTab == 1) {
+			System.out.println("slide 当前tab = 1");
 			Constant.beiSlideValue = percent;
 		}
+		
+		System.out.println("slide pre = " + Constant.SlideValue + "=" + Constant.beiSlideValue);
+		
 		if(Constant.radio.isSelected()) {  //判断重叠radio是否被选中
 			System.out.println("nothing");
 		}
@@ -27,12 +33,13 @@ public class SlideChangeUtil {
 				System.out.println("also nothing");
 			}
 		}
+		System.out.println("slide after = " + Constant.SlideValue + "=" + Constant.beiSlideValue);
 	}
 
 	private static void readyPaint(double percent) {
 		if(Constant.CurrTab == 0) {
 			System.out.println("当前tab视盘");
-			Constant.SlideValue = percent;
+			//Constant.SlideValue = percent;
 			System.out.println("pan slide percent = " + percent);
 			int len = 0;
 //			String user = "";
@@ -50,7 +57,7 @@ public class SlideChangeUtil {
 				len = Constant.AnalysisMix.getPanUser().split(",").length;
 			}
 			Constant.fenmu.setText("" + len);
-			int len1 = (int) (len * Constant.SlideValue/100);
+			int len1 = (int) (len * percent/100);
 			Constant.fenzi.setText("" + len1);
 			
 //			Mask mask = Constant.AnalysisMix.getMask();
@@ -62,7 +69,7 @@ public class SlideChangeUtil {
 		}
 		else if(Constant.CurrTab == 1) {
 			System.out.println("当前tab视杯");
-			Constant.beiSlideValue = percent;
+			//Constant.beiSlideValue = percent;
 			System.out.println("bei slide percent = " + percent);
 			int len = 0;
 //			String user = "";
@@ -81,7 +88,7 @@ public class SlideChangeUtil {
 				len = Constant.AnalysisMix.getBeiUser().split(",").length;
 			}
 			Constant.fenmu.setText("" + len);
-			int len1 = (int) (len * Constant.beiSlideValue/100);
+			int len1 = (int) (len * percent/100);
 			Constant.fenzi.setText("" + len1);
 			
 //			Mask mask = Constant.AnalysisMix.getMask();
