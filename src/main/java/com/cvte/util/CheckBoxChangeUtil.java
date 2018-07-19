@@ -65,10 +65,12 @@ public class CheckBoxChangeUtil {
 		}
 		else if(Constant.CurrTab == 2) {
 			System.out.println("Curr Tab2  " + user);
+			Constant.slider.setDisable(true);
 			Constant.AnalysisMix.setCenterUser(user);
 		}
 		else if(Constant.CurrTab == 3) {
 			System.out.println("Curr Tab3  " + user);
+			//Constant.slider.setDisable(true);
 			//Constant.AnalysisMix.setAllLabelUser(user);
 		}
 		

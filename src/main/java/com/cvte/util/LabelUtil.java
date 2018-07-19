@@ -198,11 +198,14 @@ public class LabelUtil {
 		List<String> list = Constant.AnalysisMix.getAllLabelData();
 		List<CircleData> circleList = new ArrayList<CircleData>();
 		int len = Constant.CheckBoxList.size();
+		StringBuffer tmp = new StringBuffer("");
 		for (int i = 0; i < len; i++) {
 			if (Constant.CheckBoxList.get(i).isSelected()) {
+				tmp.append(Constant.LeftList.get(i).getText() + ",");
 				circleList.add(strToObj(list.get(i), name));
 			}
 		}
+		System.out.println("tmp = " + tmp);
 //		for(String s : list) {
 //			circleList.add(strToObj(s, name));
 //		}
@@ -269,11 +272,43 @@ public class LabelUtil {
 		System.out.println("avg circle = " + circle);
 		return circle;
 	}
+	
+	private static double changeAngleNew(List<Double> list) {
+		List<Double> list1 = new ArrayList<Double>();
+		List<Double> list2 = new ArrayList<Double>();
+		for(Double d : list) {
+			if(d > 0 && d <= 180) {
+				list1.add(d);
+			}else {
+				if(d == 0) {
+					d = (double) 360;
+				}
+				list2.add(d);
+			}
+		}
+		double angle = 0;
+		if(list1.size() > list2.size()) {
+			for(Double d : list1) {
+				angle += d;
+			}
+			angle = angle / list1.size();
+			angle = angle * list.size();
+		}else {
+			for(Double d : list2) {
+				angle += d;
+			}
+			angle = angle / list2.size();
+			angle = angle * list.size();
+		}
+		return angle;
+	}
 
 	private static double changeAngle(List<Double> list) {
 		double min = list.get(0);
 		double max = list.get(0);
+		StringBuffer tmp = new StringBuffer("");
 		for(Double d : list) {
+			tmp.append(d + ",");
 			if(d < min) {
 				min = d;
 			}
@@ -281,6 +316,7 @@ public class LabelUtil {
 				max = d;
 			}
 		}
+		System.out.println("tmp = " + tmp);
 		if(max - min >= 180) {
 			for(int i = 0; i < list.size(); i++) {
 				if(list.get(i) < 180.00) {
@@ -292,6 +328,7 @@ public class LabelUtil {
 		for(Double d : list) {
 			angle += d;
 		}
+		System.out.println("tmp angle = " + angle);
 		return angle;
 	}
 

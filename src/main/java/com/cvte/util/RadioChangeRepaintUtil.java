@@ -38,8 +38,8 @@ public class RadioChangeRepaintUtil {
 		}
 		
 		//tab canvas重绘平均
-		tab1Repaint(Constant.TabCanvas.get(0).getGraphicsContext2D());
-		tab2Repaint(Constant.TabCanvas.get(1).getGraphicsContext2D());
+		tab1RepaintNew(Constant.TabCanvas.get(0).getGraphicsContext2D());
+		tab2RepaintNew(Constant.TabCanvas.get(1).getGraphicsContext2D());
 		tab3Repaint(Constant.TabCanvas.get(2).getGraphicsContext2D());
 		tab4Repaint(Constant.TabCanvas.get(3).getGraphicsContext2D());
 	}

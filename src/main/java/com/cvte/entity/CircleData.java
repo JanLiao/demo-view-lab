@@ -9,6 +9,33 @@ public class CircleData extends BaseData {
 	private double centerX;
 	private double centerY;
 	private String name;
+	private double rotateX;
+	private double rotateY;
+	public double getRotateAngle() {
+		return rotateAngle;
+	}
+
+	public void setRotateAngle(double rotateAngle) {
+		this.rotateAngle = rotateAngle;
+	}
+
+	private double rotateAngle;
+
+	public double getRotateX() {
+		return rotateX;
+	}
+
+	public void setRotateX(double rotateX) {
+		this.rotateX = rotateX;
+	}
+
+	public double getRotateY() {
+		return rotateY;
+	}
+
+	public void setRotateY(double rotateY) {
+		this.rotateY = rotateY;
+	}
 
 	public double getCenterX() {
 		return centerX;

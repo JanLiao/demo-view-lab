@@ -8,6 +8,53 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class MaskTmpUtil {
+	
+	public static void paintTmp(GraphicsContext gc, String name, int num) {
+		if("shibei".equals(name)) {
+			Mask mask = Constant.AnalysisMix.getMask();
+			int[][] beiMask = mask.getCurBeiMask();
+			
+			for(int i = 1; i < 529; i++) {
+				for(int j = 1; j < 529; j++) {
+					//System.out.println("flag = " + beiMask[i][j]);
+					if(beiMask[i][j] >= num) {
+						//System.out.println("pm = " + beiMask[i][j]);
+						if(beiMask[i][j - 1] < num || beiMask[i][j + 1] < num
+								|| beiMask[i - 1][j] < num || beiMask[i + 1][j] < num
+								|| beiMask[i - 1][j - 1] < num || beiMask[i + 1][j + 1] < num
+								|| beiMask[i - 1][j + 1] < num || beiMask[i + 1][j -1] < num
+								) {
+							//绘制点
+							paintPointTmp(gc, name, i, j);
+							//paintPoint1(gc, name, i, 1060 - j);
+						}
+					}
+				}
+			}
+		}else if("shipan".equals(name)) {
+			Mask mask = Constant.AnalysisMix.getMask();
+			int[][] panMask = mask.getCurPanMask();
+			//从x轴扫描
+			for(int i = 1; i < 529; i++) {
+				for(int j = 1; j < 529; j++) {
+					//System.out.println("flag = " + panMask[i][j]);
+					if(panMask[i][j] >= num) {
+						//System.out.println("pm = " + panMask[i][j]);
+						if(panMask[i][j - 1] < num || panMask[i][j + 1] < num
+								|| panMask[i - 1][j] < num || panMask[i + 1][j] < num
+								|| panMask[i - 1][j - 1] < num || panMask[i + 1][j + 1] < num
+								|| panMask[i - 1][j + 1] < num || panMask[i + 1][j -1] < num
+								) {
+							//绘制点  从x轴扫
+							paintPointTmp(gc, name, i, j);
+							//重y轴扫描
+							//paintPoint(gc, name, i, j);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	public static void paint(GraphicsContext gc, String name, int num) {
 		if("shibei".equals(name)) {
@@ -54,6 +101,37 @@ public class MaskTmpUtil {
 				}
 			}
 		}
+	}
+	
+	private static void paintPointTmp(GraphicsContext gc, String name, int i, int j) {
+		//final int NUM_IMGS = 5;
+		//final double opacity = 0.6;
+        //System.out.println(opacity);
+        //gc.setGlobalAlpha(opacity);
+		double ratio = 1634/530;
+		CircleData pan = LabelUtil.getAvgCircleData("shipan");
+		CircleData bei = LabelUtil.getAvgCircleData("shibei");
+		if("shipan".equals(name)) {
+			gc.save();
+			gc.setFill(Color.SEAGREEN);
+			double relativeX = (pan.getCenterX() - 53 + 0.2*i)*ratio;
+	    	double relativeY = (pan.getCenterY() + 53 - 0.2*j)*ratio;
+			//System.out.println("x = " + relativeX + "  " + relativeY);
+	    	gc.fillOval(relativeX, relativeY, 2, 2);
+			gc.restore();
+		}
+		else if("shibei".equals(name)) {
+			gc.save();
+			gc.setFill(Color.SEAGREEN);
+			//System.out.println("pan  == " + Constant.panAvg.getCenterX());
+			//System.out.println("bei == " + Constant.beiAvg.getCenterX());
+			double relativeX = (bei.getCenterX() - 53 + 0.2*i)*ratio;
+	    	double relativeY = (bei.getCenterY() + 53 - 0.2*j)*ratio;
+			//System.out.println("x = " + relativeX + "  " + relativeY);
+	    	gc.fillOval(relativeX, relativeY, 2, 2);
+			gc.restore();
+		}
+		
 	}
 	
 	private static void paintPoint(GraphicsContext gc, String name, int i, int j) {

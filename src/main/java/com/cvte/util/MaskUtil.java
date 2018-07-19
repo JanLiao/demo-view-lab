@@ -125,16 +125,28 @@ public class MaskUtil {
 			}
 		}
 		CircleData circle = new CircleData();
+		String canvas = json.getString("canvas_data");
+		JSONObject canvasObj = JSON.parseObject(canvas);
+		double w = Double.parseDouble(canvasObj.getString("w"));
+		double h = Double.parseDouble(canvasObj.getString("h"));
+		double ratio = 0.0;
+		//System.out.println(canvasObj.getString("w") + "=" + canvasObj.getString("h"));
+		if(w >= h) {
+			ratio = h / 530;
+		}
+		else {
+			ratio = w / 530;
+		}
 		circle.setAngle(Double.parseDouble(obj.getString("angle")));
 		circle.setHeight(Double.parseDouble(obj.getString("height")));
-		circle.setLeft(Double.parseDouble(obj.getString("left")));
+		circle.setLeft(Double.parseDouble(obj.getString("left"))/ratio);
 		circle.setOpacity(Double.parseDouble(obj.getString("opacity")));
 		circle.setRadius(Double.parseDouble(obj.getString("radius")));
-		circle.setScaleX(Double.parseDouble(obj.getString("scaleX")));
-		circle.setScaleY(Double.parseDouble(obj.getString("scaleY")));
+		circle.setScaleX(Double.parseDouble(obj.getString("scaleX"))/ratio);
+		circle.setScaleY(Double.parseDouble(obj.getString("scaleY"))/ratio);
 		circle.setStroke(obj.getString("stroke"));
 		circle.setStrokeWidth(Double.parseDouble(obj.getString("strokeWidth")));
-		circle.setTop(Double.parseDouble(obj.getString("top")));
+		circle.setTop(Double.parseDouble(obj.getString("top"))/ratio);
 		if("shipan".equals(name)) {
 			CircleData pan = LabelUtil.getAvgCircleData("shipan");
 			circle.setCenterX(pan.getCenterX());

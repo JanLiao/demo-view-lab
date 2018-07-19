@@ -15,6 +15,45 @@ import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
 public class RepaintMaskUtil {
+	
+	public static void maskRepaintTmp(GraphicsContext gc2) {
+        Image img2 = Constant.CurrImageLoad;
+		
+		CircleData circle = LabelUtil.getAvgCircleData("shipan");
+        //初始化视盘avg
+//        gc2.drawImage(img2, (circle.getCenterX()*4 - 265),
+//        		(circle.getCenterY()*4 - 265),
+//        		530, 530, 0, 0, 530, 530);
+		double percent = Constant.SlideValue;
+		int size = 0;
+		if(Constant.AnalysisMix.getPanUser() == null || 
+				"".equals(Constant.AnalysisMix.getPanUser())) {
+			size = 0;
+		}else {
+			size = Constant.AnalysisMix.getPanUser().split(",").length;
+		}
+		
+		int num = (int) (size*percent/100);
+		//MaskUtil.paint(gc2, "shipan", num);
+		MaskTmpUtil.paintTmp(gc2, "shipan", num);
+		
+		double beipercent = Constant.beiSlideValue;
+		int size1 = 0;
+		int num1 = 0;
+		if(Constant.AnalysisMix.getPanUser() == null || 
+				"".equals(Constant.AnalysisMix.getBeiUser())) {
+			size1 = 0;
+			num1 = 0;
+		}else {
+			size1 = Constant.AnalysisMix.getBeiUser().split(",").length;
+			num1 = (int)(size1 * beipercent/100);
+		}
+		
+		System.out.println("num1= " + num1);
+		// 绘制视杯mask
+		//MaskUtil.paint(gc2, "shibei", num1);
+		MaskTmpUtil.paintTmp(gc2, "shibei", num1);
+	}
 
 	public static void maskRepaint(GraphicsContext gc2) {
         Image img2 = Constant.CurrImageLoad;

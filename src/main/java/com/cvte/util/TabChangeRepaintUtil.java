@@ -1,22 +1,31 @@
 package com.cvte.util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import com.cvte.cons.Constant;
 import com.cvte.entity.CircleData;
 import com.cvte.entity.LineData;
 import com.cvte.entity.Mask;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 
 /** 
 * @author: jan 
@@ -55,7 +64,7 @@ public class TabChangeRepaintUtil {
 			Constant.slider.valueProperty().removeListener(Constant.SlideListener);
 			Constant.slider.setValue(Constant.SlideValue);	
 			Constant.slider.valueProperty().addListener(Constant.SlideListener);
-						
+			
 			tabChangeRefreshCover();
 			
 			System.out.println(" shipan " + Constant.AnalysisMix.getPanUser());
@@ -322,6 +331,58 @@ public class TabChangeRepaintUtil {
 			
 			//右侧repaint
 			repaintAll();
+			
+//			// snapshot
+//			Group root = new Group();
+//			Stage primaryStage = new Stage();
+//			Canvas canvas = new Canvas(1634, 1634);
+//			GraphicsContext gc = canvas.getGraphicsContext2D();
+//			FileInputStream fis = null;
+//			try {
+//				fis = new FileInputStream(new File(Constant.AnalysisMix.getImgPath()));
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			}
+//			Image img3 = new Image(fis, 1634, 1634, true, true);
+//			gc.drawImage(img3, 0, 0);
+//			RepaintMaskUtil.maskRepaintTmp(gc);
+//			root.getChildren().add(canvas);
+//    		Scene scene = new Scene(root);
+//    		primaryStage.setScene(scene);
+//
+//    		//WritableImage wim = new WritableImage(2124, 2056);
+//    		WritableImage wim = new WritableImage(1634, 1634);
+//    		Scene scena = primaryStage.getScene();
+//    		scena.snapshot(wim);
+//
+//    		String tmppath = "C:\\Users\\CVTE\\Desktop\\tmp";
+//    		String name = Constant.AnalysisMix.getImgName();
+//    		String savepath = "E:/第二批融合图片/Disc_Cup_Masks-all";
+//    		File fileA = new File(tmppath + "/" + name + ".png");
+//    		try {
+//    			ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
+//    		} catch (Exception s) {
+//    			
+//    		}
+//    		
+//    		BufferedImage bufferedImage = null;
+//    	    try {
+//    	      // read image file
+//    	      bufferedImage = ImageIO.read(new File(tmppath + "/" + name + ".png"));
+//    	      // create a blank, RGB, same width and height, and a white
+//    	      // background
+//    	      BufferedImage newBufferedImage = new BufferedImage(
+//    	          bufferedImage.getWidth(), bufferedImage.getHeight(),
+//    	          BufferedImage.TYPE_INT_RGB);
+//    	      // TYPE_INT_RGB:创建一个RBG图像，24位深度，成功将32位图转化成24位
+//    	      newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0,
+//    	          null);
+//    	      // write to jpeg file
+//    	      ImageIO.write(newBufferedImage, "jpg", new File(savepath + "/" + name + ".jpg"));
+//    	      System.out.println("Done");
+//    	    } catch (IOException e) {
+//    	      e.printStackTrace();
+//    	    }
 		}else if("ALL".equals(text)) {
 			Constant.CurrTab = 5;
 			int size = Constant.CheckBoxList.size();

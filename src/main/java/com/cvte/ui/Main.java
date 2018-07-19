@@ -276,6 +276,7 @@ public class Main extends Application {
         rightBox.getChildren().add(button1);
         
         JFXButton button2 = new JFXButton("查看融合数据");
+        button2.setDisable(true);
         button2.setStyle("-fx-background-color: rgb(77,102,204);-fx-text-fill: WHITE;-fx-font-size: 16px;-fx-padding: 0.7em 0.57em;-fx-pref-width: 120;");
         rightBox.getChildren().add(button2);
         

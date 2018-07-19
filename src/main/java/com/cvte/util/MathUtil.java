@@ -20,6 +20,20 @@ public class MathUtil {
     	
 		return "" + x1 + "," + y1;
 	}
+	
+	// 纠正
+	public static String getCenterNew(String left, String top, String angle,
+			String radius, String scaleX, String scaleY, double ratio) {
+		double sin = Math.sin(Math.toRadians(Double.parseDouble(angle)));
+    	double cos = Math.cos(Math.toRadians(Double.parseDouble(angle)));
+    	//System.out.println(sin + "=" + cos);
+    	double a = Double.parseDouble(radius)*Double.parseDouble(scaleX)/ratio;
+    	double b = Double.parseDouble(radius)*Double.parseDouble(scaleY)/ratio;
+    	double x1 = Double.parseDouble(left)/ratio + a*cos + b*sin;
+    	double y1 = Double.parseDouble(top)/ratio - a*sin + b*cos;
+    	
+		return "" + x1 + "," + y1;
+	}
 
 	public static Integer[][] getMask(CircleData circle) {
 		//System.out.println("circle = " + circle);
