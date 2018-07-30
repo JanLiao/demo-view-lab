@@ -224,7 +224,6 @@ public class Login extends Application {
 //				}
 			}
 			else {
-				stageOld.close();
 				//LabelDemo demo = new LabelDemo();
 //				Main demo = new Main();
 //				try {

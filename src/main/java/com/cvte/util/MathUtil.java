@@ -21,7 +21,30 @@ public class MathUtil {
 		return "" + x1 + "," + y1;
 	}
 	
-	// 纠正
+	public static String getPoint(String left, String top, String angle,
+			String radius, String scaleX, String scaleY, double ratio) {
+		double sin = Math.sin(Math.toRadians(Double.parseDouble(angle)));
+    	double cos = Math.cos(Math.toRadians(Double.parseDouble(angle)));
+    	//System.out.println(sin + "=" + cos);
+    	double a = Double.parseDouble(radius)*Double.parseDouble(scaleX)/ratio;
+    	double b = 0;
+    	double x1 = Double.parseDouble(left)/ratio + a*cos - b*sin;
+    	double y1 = Double.parseDouble(top)/ratio + a*sin + b*cos;
+    	return "" + x1 + "," + y1;
+	}
+	
+	public static double getAngle(String center, String point) {
+		double x1 = Double.parseDouble(center.split(",")[0]);
+		double y1 = Double.parseDouble(center.split(",")[1]);
+		double x2 = Double.parseDouble(point.split(",")[0]);
+		double y2 = Double.parseDouble(point.split(",")[1]);
+		double angle = Math.atan((y2 - y1)/(x2 - x1)) * 180/Math.PI;
+		//if(angle < 0) angle = -angle;
+		if(angle < 0) angle = 180 + angle;
+		return angle;
+	}
+	
+	// 纠正  还是弃用
 	public static String getCenterNew(String left, String top, String angle,
 			String radius, String scaleX, String scaleY, double ratio) {
 		double sin = Math.sin(Math.toRadians(Double.parseDouble(angle)));

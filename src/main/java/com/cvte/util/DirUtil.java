@@ -36,6 +36,9 @@ public class DirUtil {
 			//loading image流
 			ImageListInit.initImage();
 			
+			// 初始化sqlite DB 用于 预先读取all label数据
+			SqlUtil.connInit();
+			
 			return new DirData(dir.getId(), dir.getPath(), 
 					dir.getImgPath(), dir.getNums(), dir.getImgNums(), dir.getAddTime());
 		}

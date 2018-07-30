@@ -180,16 +180,16 @@ public class LabelUtil {
 	public static CircleData getAvgCircleData(String name) {
 		List<String> list = Constant.AnalysisMix.getAllLabelData();
 		List<CircleData> circleList = new ArrayList<CircleData>();
-		long start0 = System.currentTimeMillis();
+		//long start0 = System.currentTimeMillis();
 		for(String s : list) {
 			circleList.add(strToObj(s, name));
 		}
-		long end1 = System.currentTimeMillis();
-		System.out.println("circleList 时间 = " + (end1 - start0));
+		//long end1 = System.currentTimeMillis();
+		//System.out.println("circleList 时间 = " + (end1 - start0));
 		
 		CircleData circle = avgCircle(circleList);
-		long end2 = System.currentTimeMillis();
-		System.out.println("avg时间 = " + (end2 - end1));
+		//long end2 = System.currentTimeMillis();
+		//System.out.println("avg时间 = " + (end2 - end1));
 		circle.setName(name);
 		return circle;
 	}
@@ -202,6 +202,8 @@ public class LabelUtil {
 		for (int i = 0; i < len; i++) {
 			if (Constant.CheckBoxList.get(i).isSelected()) {
 				tmp.append(Constant.LeftList.get(i).getText() + ",");
+				System.out.println(Constant.LeftList.get(i).getText() + 
+						" = " + strToObj(list.get(i), name));
 				circleList.add(strToObj(list.get(i), name));
 			}
 		}
@@ -219,16 +221,7 @@ public class LabelUtil {
 	private static CircleData avgCircle(List<CircleData> circleList) {
 		CircleData circle = new CircleData();
 		int size = circleList.size();
-		System.out.println("size 长度 = " + size);
-		
-		double angle = 0;
-		List<Double> list = new ArrayList<>();
-		for(CircleData data : circleList) {
-			//特殊处理
-			list.add(data.getAngle());
-		}
-		angle = changeAngle(list);
-		circle.setAngle(angle/size);
+		//System.out.println("size 长度 = " + size);
 		
 		double centerX = 0;
 		double centerY = 0;
@@ -241,38 +234,68 @@ public class LabelUtil {
 		double top = 0;
 		double width = 0;
 		double strokeWidth = 0;
+		double rotateAngle = 0;
 		for(CircleData data : circleList) {
 			centerX += data.getCenterX();
 			centerY += data.getCenterY();
 			height += data.getHeight();
-			left += data.getLeft();
 			opacity += data.getOpacity();
 			radius += data.getRadius();
 			scaleX += data.getScaleX();
 			scaleY += data.getScaleY();
 			strokeWidth += data.getStrokeWidth();
-			top += data.getTop();
 			width += data.getWidth();
+			rotateAngle += data.getRotateAngle();
 		}
 		circle.setCenterX(centerX/size);
 		circle.setCenterY(centerY/size);
 		circle.setHeight(height/size);
-		circle.setLeft(left/size);
 		circle.setOpacity(opacity/size);
 		circle.setRadius(radius/size);
 		circle.setScaleX(scaleX/size);
 		circle.setScaleY(scaleY/size);
 		circle.setStrokeWidth(strokeWidth/size);
-		circle.setTop(top/size);
 		circle.setWidth(width/size);
+		circle.setRotateAngle(rotateAngle/size);
+		
+		String data = getLeftTopAngle(circle);
+		circle.setLeft(Double.parseDouble(data.split(",")[0]));
+		circle.setTop(Double.parseDouble(data.split(",")[1]));
+		circle.setAngle(Double.parseDouble(data.split(",")[2]));
 		
 		if(circleList.size() != 0) {
 			circle.setStroke(circleList.get(0).getStroke());
 		}
-		System.out.println("avg circle = " + circle);
+		//System.out.println("avg circle = " + circle);
 		return circle;
 	}
 	
+	public static String getLeftTopAngle(CircleData circle) {
+		double angle1 = circle.getRotateAngle();
+		double cx = circle.getCenterX();
+		double cy = circle.getCenterY();
+		double a = circle.getRadius()*circle.getScaleX();
+		double b = circle.getRadius()*circle.getScaleY();
+		double angle2 = Math.atan((a/b))*180/Math.PI;
+		double px = 0;
+		double py = 0;
+		double angle = 0;
+		if(angle1 > 0) {  // 验证通过
+			double sin = Math.sin(Math.toRadians(angle1 - angle2));
+			double cos = Math.cos(Math.toRadians(angle1 - angle2));
+			px = cx - Math.sqrt((a*a + b*b)) * cos;
+			py = cy - Math.sqrt((a*a + b*b)) * sin;
+			angle = (360 - (90 - angle1));
+		}else {  // 验证通过
+			double sin = Math.sin(Math.toRadians(-angle1 + angle2));
+			double cos = Math.cos(Math.toRadians(-angle1 + angle2));
+			px = cx - Math.sqrt((a*a + b*b)) * cos;
+			py = cy + Math.sqrt((a*a + b*b)) * sin;
+			angle = (90 + (180 + angle1));
+		}
+		return "" + px + "," + py + "," + angle;
+	}
+
 	private static double changeAngleNew(List<Double> list) {
 		List<Double> list1 = new ArrayList<Double>();
 		List<Double> list2 = new ArrayList<Double>();
@@ -374,6 +397,15 @@ public class LabelUtil {
 				obj.getString("scaleY"), ratio);
 		circle.setCenterX(Double.parseDouble(centerXY.split(",")[0]));
 		circle.setCenterY(Double.parseDouble(centerXY.split(",")[1]));
+		
+		// 平均准确计算升级
+		String point = MathUtil.getPoint(obj.getString("left"), obj.getString("top"),
+				obj.getString("angle"), obj.getString("radius"), obj.getString("scaleX"),
+				obj.getString("scaleY"), ratio);
+		circle.setPointX(Double.parseDouble(point.split(",")[0]));
+		circle.setPointY(Double.parseDouble(point.split(",")[1]));
+		double rotateAngle = MathUtil.getAngle(centerXY, point);
+		circle.setRotateAngle(rotateAngle);
 		//System.out.println("circle = " + circle);
 		return circle;
 	}
@@ -597,6 +629,14 @@ public class LabelUtil {
 				obj.getString("scaleY"), ratio);
 		circle.setCenterX(Double.parseDouble(centerXY.split(",")[0]));
 		circle.setCenterY(Double.parseDouble(centerXY.split(",")[1]));
+		
+		String point = MathUtil.getPoint(obj.getString("left"), obj.getString("top"),
+				obj.getString("angle"), obj.getString("radius"), obj.getString("scaleX"),
+				obj.getString("scaleY"), ratio);
+		circle.setPointX(Double.parseDouble(point.split(",")[0]));
+		circle.setPointY(Double.parseDouble(point.split(",")[1]));
+		double rotateAngle = MathUtil.getAngle(centerXY, point);
+		circle.setRotateAngle(rotateAngle);
 		return circle;
 	}
 
@@ -644,6 +684,14 @@ public class LabelUtil {
 				obj.getString("scaleY"), ratio);
 		circle.setCenterX(Double.parseDouble(centerXY.split(",")[0]));
 		circle.setCenterY(Double.parseDouble(centerXY.split(",")[1]));
+		
+		String point = MathUtil.getPoint(obj.getString("left"), obj.getString("top"),
+				obj.getString("angle"), obj.getString("radius"), obj.getString("scaleX"),
+				obj.getString("scaleY"), ratio);
+		circle.setPointX(Double.parseDouble(point.split(",")[0]));
+		circle.setPointY(Double.parseDouble(point.split(",")[1]));
+		double rotateAngle = MathUtil.getAngle(centerXY, point);
+		circle.setRotateAngle(rotateAngle);
 		return circle;
 	}
 
@@ -690,6 +738,14 @@ public class LabelUtil {
 				obj.getString("scaleY"), ratio);
 		circle.setCenterX(Double.parseDouble(centerXY.split(",")[0]));
 		circle.setCenterY(Double.parseDouble(centerXY.split(",")[1]));
+		
+		String point = MathUtil.getPoint(obj.getString("left"), obj.getString("top"),
+				obj.getString("angle"), obj.getString("radius"), obj.getString("scaleX"),
+				obj.getString("scaleY"), ratio);
+		circle.setPointX(Double.parseDouble(point.split(",")[0]));
+		circle.setPointY(Double.parseDouble(point.split(",")[1]));
+		double rotateAngle = MathUtil.getAngle(centerXY, point);
+		circle.setRotateAngle(rotateAngle);
 		return circle;
 	}
 

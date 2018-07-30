@@ -2,6 +2,10 @@ package com.cvte.util;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import com.cvte.cons.Constant;
 import com.cvte.entity.AnalysisData;
@@ -97,35 +101,72 @@ public class LabelDataUtil {
 		List<String> allLabel = new ArrayList<String>();
 		String imgname = imgName.split(",")[1];
 		String imgPath = ImagePathUtil.getPath(dir, imgname, imgAllPath);
-		String user = "";
-		for(File file : files) {
-			String name = file.getName();
+//		String user = "";
+//		for(File file : files) {
+//			String name = file.getName();
+//			//当前user下单个csv 名
+//			String soleName = getSoleName(dir, name, imgName.split(",")[1]);
+//		    
+//		    //先扫ImgAllLabel
+//		    String label = "";
+//		    String allLabelPath = dir + "/" + name + "/file/imgAllLabel" ;
+//		    List<String[]> allList = ReadCSV.readCSV(allLabelPath);
+//		    for(String[] s : allList) {
+//		    	if(imgname.equals(s[3])) {
+//		    		label = s[7];
+//		    	}
+//		    }
+//		    
+//		    String labelPath = dir + "/" + name + "/file/" + soleName + "/"
+//		    		+ imgname.split("[.]")[0];
+//		    File fl = new File(labelPath);
+//		    if(fl.exists()) {
+//		    	label = getLabel(labelPath);
+//		    	allLabel.add(name + "=" + label);
+//		    	user = user + name + ",";
+//		    }
+//		    else {
+//		    	allLabel.add(name + "=" + label);
+//		    	user = user + name + ",";
+//		    }
+//		}
+		
+		StringBuffer user = new StringBuffer("");
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+		Future<String>[] futures = new Future[files.length];
+		long star = System.currentTimeMillis();
+		for(int i = 0, len = files.length; i < len; i++) {
+			String name = files[i].getName();
+			user.append(name);
+			user.append(",");
 			//当前user下单个csv 名
-			String soleName = getSoleName(dir, name, imgName.split(",")[1]);
-		    
-		    //先扫ImgAllLabel
-		    String label = "";
-		    String allLabelPath = dir + "/" + name + "/file/imgAllLabel" ;
-		    List<String[]> allList = ReadCSV.readCSV(allLabelPath);
-		    for(String[] s : allList) {
-		    	if(imgname.equals(s[3])) {
-		    		label = s[7];
-		    	}
-		    }
-		    
-		    String labelPath = dir + "/" + name + "/file/" + soleName + "/"
-		    		+ imgname.split("[.]")[0];
-		    File fl = new File(labelPath);
-		    if(fl.exists()) {
-		    	label = getLabel(labelPath);
-		    	allLabel.add(name + "=" + label);
-		    	user = user + name + ",";
-		    }
-		    else {
-		    	allLabel.add(name + "=" + label);
-		    	user = user + name + ",";
-		    }
+			String soleName = getSoleName(dir, name, imgName);
+			ReadTask task = new ReadTask();
+			task.setDir(dir);
+			task.setImgName(imgname);
+			task.setName(name);
+			task.setSoleName(soleName);
+			task.setStart(star);
+			futures[i] = executor.submit(task);
 		}
+		
+		for(int i = 0, len = files.length; i < len; i++) {
+			StringBuffer tmp = new StringBuffer("");
+			String name = files[i].getName();
+			tmp.append(name);
+			tmp.append("=");
+			String st = "";
+			try {
+				st = futures[i].get();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			tmp.append(st);
+			allLabel.add(tmp.toString());
+		}
+		executor.shutdown();
 		
 		//设置图片路径(依次扫各个user)
 		Constant.AnalysisMix.setImgPath(imgPath);
@@ -137,10 +178,10 @@ public class LabelDataUtil {
 		Constant.AnalysisMix.setAllLabelData(shuffleLable);
 		//Constant.AnalysisView.setAllLabelData(shuffleLable);
 		
-		Constant.AnalysisMix.setAllLabelUser(user);
-		Constant.AnalysisMix.setBeiUser(user);
-		Constant.AnalysisMix.setCenterUser(user);
-		Constant.AnalysisMix.setPanUser(user);
+		Constant.AnalysisMix.setAllLabelUser(user.toString());
+		Constant.AnalysisMix.setBeiUser(user.toString());
+		Constant.AnalysisMix.setCenterUser(user.toString());
+		Constant.AnalysisMix.setPanUser(user.toString());
 //		Constant.AnalysisView.setAllLabelUser(user);
 //		Constant.AnalysisView.setBeiUser(user);
 //		Constant.AnalysisView.setCenterUser(user);

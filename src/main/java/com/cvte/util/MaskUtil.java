@@ -32,7 +32,7 @@ public class MaskUtil {
 		for(String s : Constant.AnalysisMix.getAllLabelData()) {
 			String user = s.split("=")[0];
 			String label = s.split("=")[1];
-			System.out.println("user = " + user);
+			//System.out.println("user = " + user);
 			
 			Integer[][] solePan = getMask(label, "shipan");
 			Integer[][] soleBei = getMask(label, "shibei");

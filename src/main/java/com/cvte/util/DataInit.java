@@ -57,6 +57,7 @@ public class DataInit {
 			String tmpname = imgList.get(0)[1].split(",")[1];
 			String imgPath = ImagePathUtil.getPath(tmpdir, tmpname);
 			String dirtmppath = ImagePathUtil.getDirPath(tmpdir);
+			System.out.println("tmp = " + imgPath + "=" + dirtmppath);
 			//判断图片路径是否正确，若不正确可重新选择一个临时路径	
 			if(new File(imgPath).exists() && new File(dirtmppath).exists()) {
 				String csvPath = rootPath + "/" + Constant.User + "/mixlabel/dir";
@@ -105,6 +106,9 @@ public class DataInit {
 				
 				//loading image流
 				ImageListInit.initImage();
+				
+				// 初始化sqlite DB 用于 预先读取all label数据
+				SqlUtil.connInit();
 				
 				Constant.stage.close();
 				//LabelDemo demo = new LabelDemo();

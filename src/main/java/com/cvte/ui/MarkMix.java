@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import com.cvte.cons.Constant;
+import com.cvte.cpu.MonitorServiceImpl;
 import com.cvte.entity.CircleData;
 import com.cvte.entity.LineData;
 import com.cvte.entity.Mask;
@@ -29,11 +30,14 @@ import com.cvte.util.TabChangeRepaintUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.JFXDrawer.DrawerDirection;
 import com.jfoenix.controls.JFXSlider.IndicatorPosition;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
@@ -92,7 +96,7 @@ public class MarkMix {
 //		imgTask.setCacher(cacher);
 //		Thread imgThread = new Thread(imgTask);
 //		imgThread.start();
-		
+		JFXDrawersStack drawersStack = new JFXDrawersStack();
         HBox root = new HBox();
         root.setAlignment(Pos.CENTER);
 		
@@ -197,6 +201,7 @@ public class MarkMix {
         
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         selectionModel.select(0);
+        Constant.selectionModel = selectionModel;
         
         //监听tab change
         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
@@ -207,19 +212,7 @@ public class MarkMix {
 				TabChangeRepaintUtil.tabRepaint(newTab.getText());
 			}
         });
-        
-        
-        //main.getChildren().add(tabPane);
-        HBox hbox = new HBox();
-		hbox.getChildren().addAll(tabPane);
-		hbox.setSpacing(50);
-		hbox.setMaxWidth(600);
-		hbox.setAlignment(Pos.CENTER);
-        StackPane panes = new StackPane();
-        panes.getChildren().add(hbox);
-        StackPane.setMargin(root, new Insets(350));
-        panes.setStyle("-fx-background-color:WHITE");
-        leftContent.getChildren().add(panes);
+        leftContent.getChildren().add(tabPane);
         
         VBox bottombox = new VBox();
         bottombox.setStyle("-fx-padding:10;");
@@ -428,23 +421,26 @@ public class MarkMix {
 				ComboxChangeUtil.reTextOverLap(jfxCombo.getItems().get(index).getText());
 			}
         });
+        Constant.jfxCombo = jfxCombo;
         area2.getChildren().add(jfxCombo);
         
         String tmpstr = Constant.AnalysisMix.getImgName();
         Label lbt = new Label("");
-        if(tmpstr.length() > 10) {
-        	lbt.setText("  当前: " + tmpstr.substring(0, 10) + "...");
+        if(tmpstr.length() > 18) {
+        	lbt.setText("  当前: " + tmpstr.substring(0, 18) + "...");
         }else {
         	lbt.setText("  当前: " + tmpstr);
         }
         lbt.setTooltip(new Tooltip(tmpstr));
         lbt.setStyle("-fx-text-fill: #9370db;-fx-font-size: 18;");
+        Constant.NameLabel = lbt;
         area2.getChildren().add(lbt);
         
         Label labelText = new Label("      " + (Constant.AnalysisMix.getFlag() + 1) 
         + " / " + Constant.AnalysisMix.getImgNums());
         labelText.setStyle("-fx-text-fill: GREEN;-fx-font-size: 18;");
         labelText.setAlignment(Pos.CENTER);
+        Constant.NumLabel = labelText;
         area2.getChildren().add(labelText);
         area1.setLeft(area2);
         
@@ -455,16 +451,7 @@ public class MarkMix {
         else {
         	mixStr = "已融合";
         }
-//        HBox burgerBox = new HBox();
-//        burgerBox.setSpacing(10);
-//        JFXHamburger h4 = new JFXHamburger();
-//        HamburgerNextArrowBasicTransition burgerTask3 = new HamburgerNextArrowBasicTransition(h4);
-//        //burgerTask3.setStyle("-fx-background-color: GREEN;-fx-pref-height: 15px;");
-//        burgerTask3.setRate(-1);
-//        h4.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-//            burgerTask3.setRate(burgerTask3.getRate() * -1);
-//            burgerTask3.play();
-//        });
+
         Label analysis = new Label(mixStr);
         if("已融合".equals(mixStr)) {
         	analysis.setStyle("-fx-text-fill: RED;-fx-font-size: 20;");
@@ -472,6 +459,7 @@ public class MarkMix {
         else {
         	analysis.setStyle("-fx-text-fill: GREEN;-fx-font-size: 20;");
         }
+        Constant.FlagLabel = analysis;
         //burgerBox.getChildren().addAll(h4, analysis);
         area1.setRight(analysis);
         
@@ -498,7 +486,54 @@ public class MarkMix {
         btnBox.setStyle("-fx-padding:20;");
         btnBox.setSpacing(30);
         btnBox.setMinHeight(50);
-        btnBox.setAlignment(Pos.CENTER);
+		btnBox.setAlignment(Pos.CENTER);
+		
+		// Drawer right
+		JFXDrawer rightDrawer = new JFXDrawer();
+		StackPane rightDrawerPane = new StackPane();
+		rightDrawerPane.setStyle("-fx-background-color: rgb(250, 250, 250);" + "-fx-text-fill: rgba(0, 0, 0, 0.87);");
+		RightBox.setBox(rightDrawerPane);
+		rightDrawer.setDirection(DrawerDirection.RIGHT);
+		rightDrawer.setDefaultDrawerSize(300);
+		rightDrawer.setSidePane(rightDrawerPane);
+		rightDrawer.setOverLayVisible(false);
+		rightDrawer.setResizableOnDrag(true);
+
+		JFXHamburger h4 = new JFXHamburger();
+		HamburgerNextArrowBasicTransition burgerTask3 = new HamburgerNextArrowBasicTransition(h4);
+		// burgerTask3.setStyle("-fx-background-color: GREEN;-fx-pref-height: 15px;");
+		burgerTask3.setRate(-1);
+		h4.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+			burgerTask3.setRate(burgerTask3.getRate() * -1);
+			burgerTask3.play();
+			drawersStack.toggle(rightDrawer);
+			System.out.println(rightDrawer.isFocused());
+		});
+		btnBox.getChildren().add(h4);
+
+		// 鼠标点击事件捕获
+		drawersStack.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+			System.out.println(e.getSceneX() + "=" + e.getSceneY());
+			if (rightDrawer.isOpened()) {
+				if (e.getSceneX() > 970) {
+					System.out.println("鼠标落在drawer上");
+				} else {
+					
+					try {
+						System.out.println("内存使用情况 = " + MonitorServiceImpl.getMonitorInfoBean());
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					// 关闭drawer
+					burgerTask3.setRate(burgerTask3.getRate() * -1);
+					burgerTask3.play();
+					drawersStack.toggle(rightDrawer);
+				}
+			}
+			// System.out.println(99 + "=" + rightDrawer.isOpened());
+		});
+        
         JFXButton button1 = new JFXButton("上一张");
         button1.setStyle("-fx-background-color: rgb(24, 128, 56);-fx-text-fill: WHITE;-fx-font-size: 16px;-fx-padding: 0.7em 0.50em;-fx-pref-width: 110;");
         button1.setOnAction(new EventHandler<ActionEvent>() {
@@ -507,6 +542,7 @@ public class MarkMix {
 				BtnUtil.preImage(stage);
 			}
         });
+        Constant.BtnPre = button1;
         btnBox.getChildren().add(button1);
         
         JFXButton button2 = new JFXButton("下一张");
@@ -517,6 +553,7 @@ public class MarkMix {
 				BtnUtil.nextImage(stage);
 			}
         });
+        Constant.BtnNext = button2;
         btnBox.getChildren().add(button2);
         
         JFXButton button3 = new JFXButton("保   存");
@@ -527,6 +564,7 @@ public class MarkMix {
 				BtnUtil.saveImage(stage);
 			}
         });
+        Constant.BtnSave = button3;
         btnBox.getChildren().add(button3);
         
         JFXButton button4 = new JFXButton("返   回");
@@ -549,10 +587,11 @@ public class MarkMix {
         rightContent.getChildren().add(pane);
         rightContent.getChildren().add(btnBox);
         root.getChildren().add(rightContent);
+        drawersStack.setContent(root);
         
         // 组装
         //root.getChildren().addAll(leftContent, rightContent);
-        Scene scene = new Scene(root, 1260, 640);
+        Scene scene = new Scene(drawersStack, 1260, 640);
         stage.setScene(scene);
         // 添加窗体拉伸效果
         //DrawUtil.addDrawFunc(stage, root);
@@ -564,6 +603,7 @@ public class MarkMix {
         System.out.println(bounds.getWidth() + "=" + bounds.getHeight());
         Constant.CurrTab = 0;
         stage.show();
+        Constant.TmpStage = stage;
         ExecutorService executor = Executors.newFixedThreadPool(10);
         CircleTask task1 = new CircleTask();
         //task1.setCacher(cacher);
@@ -595,6 +635,11 @@ public class MarkMix {
 			e1.printStackTrace();
 		}
         System.out.println("线程池已关闭");
+        try {
+			System.out.println("内存使用情况 = " + MonitorServiceImpl.getMonitorInfoBean());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 	private static void showScroll(JFXScrollPaneMark pane) {
@@ -605,6 +650,7 @@ public class MarkMix {
     	List<JFXCheckBox> checkboxList = new ArrayList<JFXCheckBox>();
     	List<Label> labelList = new ArrayList<Label>();
     	List<ChangeListener<Boolean>> listenerList = new ArrayList<ChangeListener<Boolean>>();
+    	List<Label> innerList = new ArrayList<Label>();
     	long start = System.currentTimeMillis();
     	for(int i = 0; i < size; i++) {
     		HBox inner = new HBox();
@@ -625,6 +671,7 @@ public class MarkMix {
         	innerBox.setAlignment(Pos.CENTER);
         	Label innerLabel = new Label(Constant.AnalysisMix.getAllLabelData().get(i).split("=")[0]);
         	innerLabel.setStyle("-fx-text-fill:rgb(77,102,204);-fx-font-size: 18px;");
+        	innerList.add(innerLabel);
         	innerBox.getChildren().add(innerLabel);
         	Label innerLabel1 = new Label("覆盖率: 1.0");
         	innerLabel1.setStyle("-fx-text-fill:RED");
@@ -660,6 +707,7 @@ public class MarkMix {
     	Constant.CheckBoxList = checkboxList;
     	Constant.LabelList = labelList;
     	Constant.ListenerList = listenerList;
+    	Constant.InnerLabel = innerList;
 
         // demo: draw a line of the canvas size and a rectangle of the viewport size => the rectangle must always be in the center
     	pane.setContent(box);

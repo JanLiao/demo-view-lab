@@ -10,13 +10,17 @@ import com.cvte.entity.LabelColor;
 import com.cvte.entity.LineData;
 import com.cvte.entity.TaskDir;
 import com.cvte.util.InputStreamCacher;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -111,4 +115,15 @@ public class Constant {
 	
 	public static String tmpImagePath = "";
 	public static String tmpDataPath = "";
+	
+	public static Stage TmpStage = null;
+	public static Label NameLabel = null;
+	public static Label FlagLabel = null;
+	public static Label NumLabel = null;
+	public static List<Label> InnerLabel = new ArrayList<Label>();
+	public static SingleSelectionModel<Tab> selectionModel = null;
+	public static JFXComboBox<Label> jfxCombo = null;
+	public static JFXButton BtnPre = null;
+	public static JFXButton BtnSave = null;
+	public static JFXButton BtnNext = null;
 }
